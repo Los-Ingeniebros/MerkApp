@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import LogInForm from '../Login/Login';
 
 const displayEmojiName = event => alert(event.target.id);
 const emojis = [
@@ -18,7 +19,27 @@ const emojis = [
   ];
 
 function App() {
+
   const greeting = "greeting";
+
+  async function ingresar (name) {
+    console.log(name);
+    const response = await fetch('http://127.0.0.1:5000/login', {
+      method:'POST',
+      body: JSON.stringify(name),
+      headers: {
+        'Content-Type':'application/json'
+      }
+    });
+    const data = await response.json();
+    console.log(data);
+    if (data.error !== undefined) {
+      alert("ERROR! " + data.error);
+    } else {
+      alert("Usuario encontrado!");
+    }
+  }
+
   return (
   <div className='container'>
     <h1 id={greeting}>Hola, mamon</h1>
@@ -44,6 +65,11 @@ function App() {
           
       }
     </ul>
+    <header className="App-header"> 
+        <h1>MerkApp</h1>
+        <p>Inicio de sesión:</p>    
+        <LogInForm onSaveName={ingresar}/>
+      </header>
   </div>
 
 )
