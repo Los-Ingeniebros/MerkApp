@@ -2,25 +2,27 @@ import React from 'react';
 import './App.css';
 import LogInForm from '../Login/Login';
 
-const displayEmojiName = event => alert(event.target.id);
-const emojis = [
-  {
-  emoji: "😀",
-  name: "grinning face"
-  },
-  {
-  emoji: "🎉",
-  name: "party popper"
-  },
-  {
-  emoji: "💃",
-  name: "woman dancing"
-  }
-  ];
+import logo from '../../imagenes/MerkAppSinFondo.png';
+
+// const displayEmojiName = event => alert(event.target.id);
+// const emojis = [
+//   {
+//   emoji: "😀",
+//   name: "grinning face"
+//   },
+//   {
+//   emoji: "🎉",
+//   name: "party popper"
+//   },
+//   {
+//   emoji: "💃",
+//   name: "woman dancing"
+//   }
+//   ];
 
 function App() {
 
-  const greeting = "greeting";
+  // const greeting = "greeting";
 
   async function ingresar (name) {
     console.log(name);
@@ -41,37 +43,54 @@ function App() {
   }
 
   return (
-  <div className='container'>
-    <h1 id={greeting}>Hola, mamon</h1>
-    <p>Esto es un ejemplo de como escribir las cosas en React</p>
-    <ul>
-      {
-        emojis.map(emoji => (
+  <div className='login'>
+    <div class="area" >
+      <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <div className='container'>
+        {/* <h1 id={greeting}>Hola, mamon</h1> */}
+        {/* 
+        <p>Esto es un ejemplo de como escribir las cosas en React</p>
+        <ul>
+          {
+            emojis.map(emoji => (
 
-          <li key={emoji.name}>
-          
-          <button
-          
-          onClick={displayEmojiName} 
-          >
-          
-          <span role="img" aria-label={emoji.name} id={emoji.name}>{emoji.emoji}</span>
-          
-          </button>
-          
-          </li>
-          
-          ))
-          
-      }
-    </ul>
-    <header className="App-header"> 
-        <h1>MerkApp</h1>
-        <p>Inicio de sesión:</p>    
-        <LogInForm onSaveName={ingresar}/>
-      </header>
+              <li key={emoji.name}>
+              
+              <button
+              
+              onClick={displayEmojiName} 
+              >
+              
+              <span role="img" aria-label={emoji.name} id={emoji.name}>{emoji.emoji}</span>
+              
+              </button>
+              
+              </li>
+              
+              ))
+          }
+        </ul> */}
+        <header className="App-header" id="app-header">
+          <span class="logo-log">
+            <img src={logo} alt="MerkApp's logo"/>
+            <h1>MerkApp</h1>
+            <LogInForm onSaveName={ingresar}/>
+          </span>
+        </header>
+      </div>
+    </div >
   </div>
-
 )
 }
 

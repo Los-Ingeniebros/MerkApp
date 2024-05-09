@@ -1,6 +1,7 @@
 import { useState } from "react";
 import './Login.css';
 
+// import scrpt from './script.js';
 
 function LogInForm (props) {
     const [enteredNombre, setNombre] = useState('');
@@ -27,31 +28,40 @@ function LogInForm (props) {
     }
 
     return (
-        <form onSubmit={submitHandler}>
-            <div>
-                <label>Nombre: </label>
-                <input 
-                    id="username"
-                    name="username"
-                    type='text'
-                    value={enteredNombre}
-                    onChange={nombreChangeHandler}
-                />
+        <div class="wrapper fadeInDown">
+            <div class="container">
+                <div class="form">
+                    <span class="log">
+                        Inicio de sesión
+                    </span>
+                    <form onSubmit={submitHandler}>
+                        <div>
+                            <label for="email">Email</label>
+                            <input
+                                id="email"
+                                name="email"
+                                type='email'
+                                value={enteredNombre}
+                                onChange={nombreChangeHandler}
+                            />
+                        </div>
+                        <div>
+                            <label for="password">Password</label>
+                            <input
+                                id="password"
+                                name="password"
+                                type='password'
+                                value={enteredContrasenia}
+                                onChange={contraseniaChangeHandler}
+                            />
+                        </div>
+                        <div className="boton">
+                            <button type="submit" id="submit" className='boton-animado'>Ingresar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div>
-                <label>Contraseña: </label>
-                <input
-                    id="password"
-                    name="password"
-                    type='password'
-                    value={enteredContrasenia}
-                    onChange={contraseniaChangeHandler}
-                />
-            </div>
-            <div>
-                <button type="submit" className='boton'>Inciar Sesión</button>
-            </div>
-        </form>
+        </div>
     )
 }
 
