@@ -14,7 +14,7 @@ from alchemyClasses.Comprar import Comprar
 
 app = Flask(__name__)
 app.register_blueprint(catalogue)
-app.register_blueprint(usuario_blueprint)
+#app.register_blueprint(usuario_blueprint)
 app.config['SECRET_KEY'] = 'dev'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ing:Developer123!@localhost:3306/base_merkaap'
 db.init_app(app)
