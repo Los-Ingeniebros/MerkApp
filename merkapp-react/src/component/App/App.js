@@ -44,8 +44,8 @@ function App() {
 
   return (
   <div className='login'>
-    <div class="area" >
-      <ul class="circles">
+    <div className="area" >
+      <ul className="circles">
         <li></li>
         <li></li>
         <li></li>
@@ -82,7 +82,7 @@ function App() {
           }
         </ul> */}
         <header className="App-header" id="app-header">
-          <span class="logo-log">
+          <span className="logo-log">
             <img src={logo} alt="MerkApp's logo"/>
             <h1>MerkApp</h1>
             <LogInForm onSaveName={ingresar}/>

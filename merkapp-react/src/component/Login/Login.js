@@ -28,10 +28,10 @@ function LogInForm (props) {
     }
 
     return (
-        <div class="wrapper fadeInDown">
-            <div class="container">
-                <div class="form">
-                    <span class="log">
+        <div className="wrapper fadeInDown">
+            <div className="container">
+                <div className="form">
+                    <span className="log">
                         Inicio de sesión
                     </span>
                     <form onSubmit={submitHandler}>
