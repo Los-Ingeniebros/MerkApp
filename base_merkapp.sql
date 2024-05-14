@@ -7,7 +7,7 @@ with grant option;
 
 use base_merkaap;
 
--------------TABLAS CON LLAVES PRIMARIAS-----------------
+-- -------------TABLAS CON LLAVES PRIMARIAS-----------------
 
 
 CREATE TABLE comprador (
