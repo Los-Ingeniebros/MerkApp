@@ -1,30 +1,38 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import './Login.css';
 
 // import scrpt from './script.js';
 
 function LogInForm (props) {
-    const [enteredNombre, setNombre] = useState('');
+    const [enteredCorreo, setCorreo] = useState('');
     const [enteredContrasenia, setContrasenia] = useState('');
+    const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
+    const opciones = ["Vendedor", "Comprador"];
 
-    const nombreChangeHandler = (event) => {
-        setNombre(event.target.value);
+    const correoChangeHandler = (event) => {
+        setCorreo(event.target.value);
     }
 
     const contraseniaChangeHandler = (event) => {
         setContrasenia(event.target.value);
     }
 
+    const opcionChangeHandler = (elemento) => {
+        setOpcionSeleccionada(elemento);
+    };
+
     const submitHandler = (event) => {
         event.preventDefault();
 
         const user = {
-            nombre:enteredNombre,
-            contrasenia:enteredContrasenia
+            correo:enteredCorreo,
+            contrasenia:enteredContrasenia,
+            modo:opcionSeleccionada
         }
         props.onSaveName(user);
-        setNombre('');
+        setCorreo('');
         setContrasenia('');
+        setOpcionSeleccionada('');
     }
 
     return (
@@ -55,6 +63,13 @@ function LogInForm (props) {
                                 onChange={contraseniaChangeHandler}
                             />
                         </div>
+                        <ul style={{ listStyle: 'none', padding: 0 }}>
+                            {opciones.map((opcion, indice) => (
+                            <li key={indice} onClick={() => opcionChangeHandler(opcion)} style={{ cursor: 'pointer', border: opcion === opcionSeleccionada ? '2px solid blue' : 'none', padding: '5px', marginBottom: '5px', borderRadius: '5px'}}>
+                                {opcion}
+                            </li>
+                            ))}
+                        </ul>
                         <div className="boton">
                             <button type="submit" id="submit" className='boton-animado'>Ingresar</button>
                         </div>
