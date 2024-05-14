@@ -50,7 +50,7 @@ function LogInForm (props) {
                                 name="email"
                                 type='email'
                                 value={enteredNombre}
-                                onChange={nombreChangeHandler}
+                                onChange={correoChangeHandler}
                             />
                         </div>
                         <div>
