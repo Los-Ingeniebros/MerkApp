@@ -6,6 +6,7 @@ from alchemyClasses.Comprador import Comprador
 from alchemyClasses.Vendedor import Vendedor
 from alchemyClasses.Producto import Producto
 from alchemyClasses.Comprar import Comprar
+from alchemyClasses.Categoria import Categoria
 import json
 
 app = Flask(__name__)
@@ -63,10 +64,11 @@ def recuperarVentas():
     elif request.method == 'POST':
         correo = request.json[2]
         contrasenia = request.json[3]        
-        vendedor = Vendedor.query.filter(Vendedor.correo == correo, Vendedor.contrasenia == contrasenia).first()
-        diccionario = {}
+        vendedor = Vendedor.query.filter(Vendedor.correo == correo, Vendedor.contrasenia == contrasenia).first()        
+        diccionario = {}        
         for registro in Producto.query.filter(Producto.idVendedor == vendedor.idVendedor):
-            venta = {registro.idProducto:[registro.nombre, registro.stock, registro.precio, registro.descripcion]}
+            categoria = Categoria.query.filter(Categoria.idCategoria == registro.idCategoria).first()
+            venta = {registro.idProducto:[registro.nombre, categoria.nombre, registro.precio , registro.stock]}
             diccionario.update(venta)    
         return json.dumps({'dic': diccionario})
 
