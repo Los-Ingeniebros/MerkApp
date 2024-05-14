@@ -1,41 +1,22 @@
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import React, { useState, useEffect } from 'react';
 import './App.css';
 import LogInForm from '../Login/Login';
-import HomeVendedor from './HomeVendedor';
-import HomeComprador from './HomeComprador';
-import Eliminar from './EliminarVentas';
-import AgregarOpinion from './AgregarOpinion';
-
+import HomeVendedor from '../HomeVendedor/HomeVendedor';
+import HomeComprador from '../HomeComprador/HomeComprador';
+import Eliminar from '../EliminarVentas/EliminarVentas';
+import AgregarOpinion from '../AgregarOpinion/AgregarOpinion';
 
 import logo from '../../imagenes/MerkAppSinFondo.png';
 
-// const displayEmojiName = event => alert(event.target.id);
-// const emojis = [
-//   {
-//   emoji: "😀",
-//   name: "grinning face"
-//   },
-//   {
-//   emoji: "🎉",
-//   name: "party popper"
-//   },
-//   {
-//   emoji: "💃",
-//   name: "woman dancing"
-//   }
-//   ];
-
 function App() {
 
-  // const greeting = "greeting";
-
   const [user, setUser] = useState('');
-  const [users, setUsers] = useState('');
+  const [users, setUsers] = useState('');  
   const navigate = useNavigate();
-  const location = useLocation();  
+  const location = useLocation();
 
   async function ingresar (name) {
     console.log(name);        
@@ -56,9 +37,9 @@ function App() {
       const usr = [data['modo'], data['nombre'], data['correo'], data['contrasenia']]
       setUser(usr);  
       console.log(data['modo']);
-      if(data['modo'] == 'Vendedor'){
+      if(data['modo'] === 'Vendedor'){
         navigate('/vendedor');      
-      } else if(data['modo'] == 'Comprador'){
+      } else if(data['modo'] === 'Comprador'){
         navigate('/comprador');      
       }
     }     
@@ -74,6 +55,11 @@ function App() {
     });      
     const data = await response.json();    
     console.log(data);
+    //console.log(typeof data['dic']);
+    //console.log(data['dic']);
+    //const usuarios = JSON.parse(data['lista']);
+    //console.log(usuarios);
+    //setUsers(usuarios);    
     setUsers(data['dic']);    
   };  
 
@@ -86,9 +72,9 @@ function App() {
         almacenadoUser = almacenadoUser.split(",");           
         console.log('Nombre de usuario recuperado:', almacenadoUser);
         //Cookies.remove('user');
-        if (almacenadoUser[0] == 'Vendedor'){
+        if (almacenadoUser[0] === 'Vendedor'){
           navigate('/vendedor');
-        } else if (almacenadoUser[0] == 'Comprador'){
+        } else if (almacenadoUser[0] === 'Comprador'){
           navigate('/comprador');
         }         
       } else {
@@ -96,12 +82,12 @@ function App() {
       }      
       //navigate('/home');
     } else if (location.pathname === '/vendedor') {            
-      var almacenadoUser = Cookies.get('user');
+      almacenadoUser = Cookies.get('user');
       if (almacenadoUser) {     
         almacenadoUser = almacenadoUser.split(",");   
         setUser(almacenadoUser);
         console.log('Nombre de usuario recuperado:', almacenadoUser);  
-        if (almacenadoUser[0] == 'Comprador'){
+        if (almacenadoUser[0] === 'Comprador'){
           navigate('/comprador');
         }       
       } else {        
@@ -111,12 +97,12 @@ function App() {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
       }
     } else if (location.pathname === '/comprador') {            
-      var almacenadoUser = Cookies.get('user');
+      almacenadoUser = Cookies.get('user');
       if (almacenadoUser) {     
         almacenadoUser = almacenadoUser.split(",");   
         setUser(almacenadoUser);
         console.log('Nombre de usuario recuperado:', almacenadoUser); 
-        if (almacenadoUser[0] == 'Vendedor'){
+        if (almacenadoUser[0] === 'Vendedor'){
           navigate('/vendedor');
         }        
       } else {        
@@ -133,10 +119,9 @@ function App() {
   }, [location.pathname]);
 
   return (
-    /*
-  <div className='login'>
-    <div class="area" >
-      <ul class="circles">
+    <div className='login'>
+    <div className="area" >
+      <ul className="circles">
         <li></li>
         <li></li>
         <li></li>
@@ -149,8 +134,7 @@ function App() {
         <li></li>
       </ul>
       <div className='container'>
-        {/* <h1 id={greeting}>Hola, mamon</h1> */
-      /*}
+        {/* <h1 id={greeting}>Hola, mamon</h1> */}
         {/* 
         <p>Esto es un ejemplo de como escribir las cosas en React</p>
         <ul>
@@ -172,31 +156,23 @@ function App() {
               
               ))
           }
-        </ul> */
-      /*}
+        </ul> */}
         <header className="App-header" id="app-header">
-          <span class="logo-log">
+          <span className="logo-log">
             <img src={logo} alt="MerkApp's logo"/>
-            <h1>MerkApp</h1>
-            <LogInForm onSaveName={ingresar}/>
+            <h1>MerkApp</h1>            
+              <Routes>
+                <Route path="/" element={<LogInForm onSaveName={ingresar}/>} />  
+                <Route path="/vendedor" element={HomeVendedor(user)} />
+                <Route path="/comprador" element={HomeComprador(user)} />
+                <Route path="/vendedor/eliminar" element={Eliminar(users)} />  
+                <Route path="/comprador/agregar" element={AgregarOpinion(user)} />  
+                <Route path="/login" element={<LogInForm onSaveName={ingresar}/>} />  
+              </Routes>            
           </span>
         </header>
       </div>
     </div >
-  </div>
-  */
-  <div className="App">
-    <header className="App-header">  
-      <h1>MerkApp</h1>                 
-      <Routes>
-        <Route path="/" element={<LogInForm onSaveName={ingresar}/>} />  
-        <Route path="/vendedor" element={HomeVendedor(user)} />
-        <Route path="/comprador" element={HomeComprador(user)} />
-        <Route path="/vendedor/eliminar" element={Eliminar(users)} />  
-        <Route path="/comprador/agregar" element={AgregarOpinion(user)} />  
-        <Route path="/login" element={<LogInForm onSaveName={ingresar}/>} />  
-      </Routes>        
-    </header>      
   </div>
   );
 }
