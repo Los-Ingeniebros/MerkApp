@@ -17,9 +17,10 @@ CREATE TABLE comprador (
     apellidoMat VARCHAR(50),
     contrasenia VARCHAR(64) NOT NULL,
     correo VARCHAR(45) NOT NULL,
+    telefono VARCHAR(10) NOT NULL,
     fotoDePerfil longblob,
     PRIMARY KEY (idComprador),
-    UNIQUE KEY correo (correo)
+    UNIQUE KEY correo (correo, contrasenia)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -31,9 +32,10 @@ CREATE TABLE vendedor (
     apellidoMat VARCHAR(50),
     contrasenia VARCHAR(64) NOT NULL,
     correo VARCHAR(45) NOT NULL,
+    telefono VARCHAR(10) NOT NULL,
     fotoDePerfil longblob,
     PRIMARY KEY (idVendedor),
-    UNIQUE KEY correo (correo)
+    UNIQUE KEY correo (correo, contrasenia)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
