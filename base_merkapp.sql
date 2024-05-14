@@ -2,7 +2,7 @@ create database base_merkaap;
 
 create user 'lab'@'localhost' identified by 'Developer123!';
 
-grant all privileges on lab_ing_software.* to 'lab'@'localhost'
+grant all privileges on base_merkaap.* to 'lab'@'localhost'
 with grant option;
 
 use base_merkaap;
