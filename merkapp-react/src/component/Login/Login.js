@@ -44,17 +44,17 @@ function LogInForm (props) {
                     </span>
                     <form onSubmit={submitHandler}>
                         <div>
-                            <label for="email">Email</label>
+                            <label for="email">Correo electrónico: </label>
                             <input
                                 id="email"
                                 name="email"
                                 type='email'
-                                value={enteredNombre}
+                                value={enteredCorreo}
                                 onChange={correoChangeHandler}
                             />
                         </div>
                         <div>
-                            <label for="password">Password</label>
+                            <label for="password">Contraseña: </label>
                             <input
                                 id="password"
                                 name="password"
