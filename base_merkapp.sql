@@ -5,6 +5,9 @@ create user 'lab'@'localhost' identified by 'Developer123!';
 grant all privileges on base_merkaap.* to 'lab'@'localhost'
 with grant option;
 
+grant all privileges on base_merkaap.* to 'root@localhost'
+with grant option;
+
 use base_merkaap;
 
 -- -------------TABLAS CON LLAVES PRIMARIAS-----------------

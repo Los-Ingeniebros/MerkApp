@@ -8,6 +8,8 @@ import HomeVendedor from '../HomeVendedor/HomeVendedor';
 import HomeComprador from '../HomeComprador/HomeComprador';
 import Eliminar from '../EliminarVentas/EliminarVentas';
 import AgregarOpinion from '../AgregarOpinion/AgregarOpinion';
+import Modificar from '../ModificarVentas/ModificarVentas';
+import Buscar from '../BuscarProducto/BuscarProducto';
 
 import logo from '../../imagenes/MerkAppSinFondo.png';
 
@@ -115,6 +117,10 @@ function App() {
       Cookies.remove('user');
     } else if (location.pathname === '/vendedor/eliminar') {
       recuperar();      
+    } else if (location.pathname === '/vendedor/modificar') {
+      recuperar(); 
+    } else if (location.pathname === '/comprador/buscar') {
+        recuperar(); 
     }
   }, [location.pathname]);
 
@@ -166,7 +172,9 @@ function App() {
                 <Route path="/vendedor" element={HomeVendedor(user)} />
                 <Route path="/comprador" element={HomeComprador(user)} />
                 <Route path="/vendedor/eliminar" element={Eliminar(users)} />  
-                <Route path="/comprador/agregar" element={AgregarOpinion(user)} />  
+                <Route path="/vendedor/modificar" element={Modificar(users)} /> 
+                <Route path="/comprador/agregar" element={AgregarOpinion(user)} /> 
+                <Route path="/comprador/buscar" element={Buscar(users)} />  
                 <Route path="/login" element={<LogInForm onSaveName={ingresar}/>} />  
               </Routes>            
           </span>

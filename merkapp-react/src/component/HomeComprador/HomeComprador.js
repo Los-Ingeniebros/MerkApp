@@ -15,13 +15,18 @@ function HomeComprador(name){
         navigate('/comprador/agregar');                
     };
 
+    function buscar () {
+        navigate('/comprador/buscar');                
+    };
+
     return (
         <form onSubmit={submitHandler}>  
             <div> 
                 Hola {name[0]} {name[1]}                
                 <div>
                     <button type="submit">Cerrar sesión</button>                 
-                    <button onClick={() => agregar()}>Agregar opinión</button>                 
+                    <button onClick={() => agregar()}>Agregar opinión</button>
+                    <button onClick={() => buscar()}>Buscar productos</button>
                 </div>
             </div>
         </form>);

@@ -12,7 +12,7 @@ import json
 app = Flask(__name__)
 app.register_blueprint(catalogue)
 app.config['SECRET_KEY'] = 'dev'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ing:Developer123!@localhost:3306/base_merkaap'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://lab:Developer123!@localhost:3306/base_merkaap'
 db.init_app(app)
 CORS(app)
 
@@ -75,6 +75,25 @@ def recuperarVentas():
 
 @app.route('/eliminarVentas', methods=['GET', 'POST', 'OPTIONS'])
 def eliminarVentas(): 
+    if request.method == 'OPTIONS':                   
+        res = Response()        
+        res.headers['X-Content-Type-Options'] = '*'
+        return res
+    elif request.method == 'GET':                         
+        return json.dumps({'hola': 'fin'})
+    elif request.method == 'POST':
+        lista_de_id = request.json
+        for id in lista_de_id:
+            venta = Producto.query.filter(Producto.idProducto == id).first()
+            for registro in Comprar.query.filter(Comprar.idProducto == id).all():
+                db.session.delete(registro)
+                db.session.commit()
+            db.session.delete(venta)
+            db.session.commit()
+        return json.dumps({'listo':'usuario'})
+    
+@app.route('/modificarVentas', methods=['GET', 'POST', 'OPTIONS'])
+def modificarVentas(): 
     if request.method == 'OPTIONS':                   
         res = Response()        
         res.headers['X-Content-Type-Options'] = '*'
