@@ -1,29 +1,22 @@
-from sqlalchemy import Column, Integer, String, BLOB
+from sqlalchemy import Column, Integer, String
 from alchemyClasses  import db
 from flask import Flask, redirect, render_template, url_for, request, flash, session, Blueprint
 
-class Producto(db.Model):
+class Comprar(db.Model):
 
-    __tablename__ = 'producto'
-    idProducto = Column(Integer, nullable=False, primary_key=True)
-    idVendedor = Column(Integer, nullable=False)
-    idCategoria = Column(Integer, nullable=False)
-    nombre = Column(String(200), nullable=False)
-    descripcion = Column(String(200), nullable=False)
-    precio = Column(Integer, nullable=False)
-    stock = Column(Integer, nullable=False)
-    fotoDeProducto = Column(BLOB)        
-    #telefono = Column(String(10), foreign_key=True)
-    #correo = Column(String(500), foreign_key=True)
+    __tablename__ = 'comprar'
+    idCompra = Column(Integer, nullable=False, primary_key=True)
+    idComprador = Column(Integer, nullable=False)
+    idProducto = Column(Integer, nullable=False)
+    comentario = Column(String(200))
+    calificacion = Column(Integer)
 
-    def __init__(self, idProducto, idVendedor, idCategoria, nombre, precio, stock, fotoDeProducto):
+    def __init__(self, idCompra, idComprador, idProducto, comentario, calificacion):
+        self.idCompra = idCompra
+        self.idComprador = idComprador
         self.idProducto = idProducto
-        self.idVendedor = idVendedor
-        self.idCategoria = idCategoria
-        self.nombre = nombre
-        self.precio = precio
-        self.stock = stock
-        self.fotoDeProducto = fotoDeProducto
+        self.comentario = comentario
+        self.calificacion = calificacion
 
     #Sugerencia, después poner las funciones en los modelos de tal manera que en app.py no tengamos eso y solo lo mandemos a llamar
     '''
