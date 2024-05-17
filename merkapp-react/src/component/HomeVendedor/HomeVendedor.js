@@ -15,13 +15,18 @@ function HomeVendedor(name){
         navigate('/vendedor/eliminar');                
     };
 
+    function modificar () {
+        navigate('/vendedor/modificar');                
+    };
+
     return (
         <form onSubmit={submitHandler}>  
             <div> 
                 Hola {name[0]} {name[1]}                
                 <div>
                     <button type="submit">Cerrar sesión</button>                 
-                    <button onClick={() => eliminar()}>Eliminar venta(s)</button>                                 
+                    <button onClick={() => eliminar()}>Eliminar venta(s)</button>     
+                    <button onClick={() => modificar()}>Modificar venta(s)</button>                               
                 </div>
             </div>
         </form>);
