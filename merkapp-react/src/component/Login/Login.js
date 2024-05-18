@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import './Login.css';
 
+import { useNavigate } from "react-router-dom";
+
 // import scrpt from './script.js';
 
 function LogInForm (props) {
@@ -8,6 +10,8 @@ function LogInForm (props) {
     const [enteredContrasenia, setContrasenia] = useState('');
     const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
     const opciones = ["Vendedor", "Comprador"];
+    const navigate = useNavigate();
+
 
     const correoChangeHandler = (event) => {
         setCorreo(event.target.value);
@@ -74,6 +78,9 @@ function LogInForm (props) {
                             <button type="submit" id="submit" className='boton-animado'>Ingresar</button>
                         </div>
                     </form>
+                    <div className="boton">
+                            <button type="submit" className='boton-animado' onClick={() =>navigate('/register')} >¿No tiene cuenta? Registrarse</button>
+                        </div>
                 </div>
             </div>
         </div>
