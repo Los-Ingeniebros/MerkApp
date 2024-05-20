@@ -16,18 +16,14 @@ function LogInForm (props) {
     const correoChangeHandler = (event) => {
         setCorreo(event.target.value);
     }
-
     const contraseniaChangeHandler = (event) => {
         setContrasenia(event.target.value);
     }
-
     const opcionChangeHandler = (elemento) => {
         setOpcionSeleccionada(elemento);
     };
-
     const submitHandler = (event) => {
         event.preventDefault();
-
         const user = {
             correo:enteredCorreo,
             contrasenia:enteredContrasenia,
@@ -38,12 +34,11 @@ function LogInForm (props) {
         setContrasenia('');
         setOpcionSeleccionada('');
     }
-
     return (
-        <div className="wrapper fadeInDown">
-            <div className="container">
-                <div className="form">
-                    <span className="log">
+        <div class="wrapper fadeInDown">
+            <div class="container">
+                <div class="form">
+                    <span class="log">
                         Inicio de sesión
                     </span>
                     <form onSubmit={submitHandler}>
@@ -86,5 +81,4 @@ function LogInForm (props) {
         </div>
     )
 }
-
 export default LogInForm;

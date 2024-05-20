@@ -23,10 +23,10 @@ function HomeComprador(name){
         <form onSubmit={submitHandler}>  
             <div> 
                 Hola {name[0]} {name[1]}                
-                <div>
-                    <button type="submit">Cerrar sesión</button>                 
+                <div>                
                     <button onClick={() => agregar()}>Agregar opinión</button>
                     <button onClick={() => buscar()}>Buscar productos</button>
+                    <button type="submit">Cerrar sesión</button>
                 </div>
             </div>
         </form>);

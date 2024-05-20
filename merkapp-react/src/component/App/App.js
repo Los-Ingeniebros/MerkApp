@@ -8,14 +8,14 @@ import HomeVendedor from '../HomeVendedor/HomeVendedor';
 import HomeComprador from '../HomeComprador/HomeComprador';
 import Eliminar from '../EliminarVentas/EliminarVentas';
 import AgregarOpinion from '../AgregarOpinion/AgregarOpinion';
-import Modificar from '../ModificarVentas/ModificarVentas';
-import Buscar from '../BuscarProducto/BuscarProducto';
 
 import logo from '../../imagenes/MerkAppSinFondo.png';
 import RequireAuth from '../Prueba/WihAuth';
 import MiPaginaProtegida from '../Prueba/P1';
 import Registro from '../Registrarse/Registro';
 import Home from '../Home/Home';
+import BuscarProducto from '../BuscarProducto/BuscarProducto';
+import ModificarVentas from '../ModificarVentas/ModificarVentas';
 
 function App() {
 
@@ -43,7 +43,6 @@ function App() {
       const usr = [data['modo'], data['nombre'], data['correo'], data['contrasenia']]
       setUser(usr);  
       console.log(data['modo']);
-      Cookies.set('user', user);
       if(data['modo'] === 'Vendedor'){
         navigate('/vendedor');      
       } else if(data['modo'] === 'Comprador'){
@@ -72,14 +71,13 @@ function App() {
 
   useEffect(() => {            
     if (location.pathname === '/') {            
-      // Cookies.set('user', user, {expires: 2025});
+      Cookies.set('user', user);
       var almacenadoUser = Cookies.get('user');
       if (almacenadoUser) {
         //setUser(almacenadoUser);
         almacenadoUser = almacenadoUser.split(",");           
         console.log('Nombre de usuario recuperado:', almacenadoUser);
         //Cookies.remove('user');
-        console.log("estamos en un condicional")
         if (almacenadoUser[0] === 'Vendedor'){
           navigate('/vendedor');
         } else if (almacenadoUser[0] === 'Comprador'){
@@ -120,13 +118,9 @@ function App() {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
       }
     } else if (location.pathname === '/login') {            
-      // Cookies.remove('user');
+      Cookies.remove('user');
     } else if (location.pathname === '/vendedor/eliminar') {
       recuperar();      
-    } else if (location.pathname === '/vendedor/modificar') {
-      recuperar(); 
-    } else if (location.pathname === '/comprador/buscar') {
-        recuperar(); 
     }
   }, [location.pathname]);
 
@@ -150,20 +144,19 @@ function App() {
         <header className="App-header" id="app-header">
           <span className="logo-log">
             <img src={logo} alt="MerkApp's logo"/>
-            <h1>MerkApp</h1>        
+            <h1>MerkApp</h1>            
               <Routes>
                 <Route path="/" element={Home()} />  
                 <Route path="/vendedor" element={HomeVendedor(user)} />
                 <Route path="/comprador" element={HomeComprador(user)} />
                 <Route path="/vendedor/eliminar" element={Eliminar(users)} />  
-                <Route path="/comprador/agregar" element={AgregarOpinion(user)} /> 
-                <Route path="/comprador/buscar" element={Buscar(users)} />  
-                <Route path="/comprador/agregar" element={AgregarOpinion(user)} /> 
-                <Route path="/vendedor/modificar" element={Modificar(users)} /> 
+                <Route path="/vendedor/modificar" element={ModificarVentas(users)} /> 
+                <Route path="/comprador/agregar" element={AgregarOpinion(user)} />  
+                <Route path="/comprador/buscar" element={BuscarProducto(user)} />
                 <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  
                 <Route path='/ola' element={MiPaginaProtegida()} />
                 <Route path='/register' element={Registro()} />
-              </Routes>
+              </Routes>            
           </span>
         </header>
       </div>
