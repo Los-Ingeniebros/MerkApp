@@ -8,13 +8,14 @@ import HomeVendedor from '../HomeVendedor/HomeVendedor';
 import HomeComprador from '../HomeComprador/HomeComprador';
 import Eliminar from '../EliminarVentas/EliminarVentas';
 import AgregarOpinion from '../AgregarOpinion/AgregarOpinion';
+import BuscarProducto from '../BuscarProducto/BuscarProducto';
+import EncontrarProducto from '../BuscarProducto/EncontrarProducto';
 
 import logo from '../../imagenes/MerkAppSinFondo.png';
 import RequireAuth from '../Prueba/WihAuth';
 import MiPaginaProtegida from '../Prueba/P1';
 import Registro from '../Registrarse/Registro';
 import Home from '../Home/Home';
-import BuscarProducto from '../BuscarProducto/BuscarProducto';
 import ModificarVentas from '../ModificarVentas/ModificarVentas';
 
 function App() {
@@ -152,7 +153,7 @@ function App() {
                 <Route path="/vendedor/eliminar" element={Eliminar(users)} />  
                 <Route path="/vendedor/modificar" element={ModificarVentas(users)} /> 
                 <Route path="/comprador/agregar" element={AgregarOpinion(user)} />  
-                <Route path="/comprador/buscar" element={BuscarProducto(user)} />
+                <Route path="/comprador/buscar" element={<EncontrarProducto />} />
                 <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  
                 <Route path='/ola' element={MiPaginaProtegida()} />
                 <Route path='/register' element={Registro()} />
