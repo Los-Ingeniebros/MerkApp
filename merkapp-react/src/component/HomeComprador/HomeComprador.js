@@ -9,10 +9,10 @@ function HomeComprador(name){
         Cookies.remove('user');
         navigate('/login');
         Cookies.remove('user');
-    } 
+    }     
 
-    function agregar () {
-        navigate('/comprador/agregar');                
+    function consultar () {
+        navigate('/comprador/consultar');                
     };
 
     function buscar () {
@@ -24,7 +24,7 @@ function HomeComprador(name){
             <div> 
                 Hola {name[0]} {name[1]}                
                 <div>                
-                    <button onClick={() => agregar()}>Agregar opinión</button>
+                    <button onClick={() => consultar()}>Consultar productos</button>
                     <button onClick={() => buscar()}>Buscar productos</button>
                     <button type="submit">Cerrar sesión</button>
                 </div>
