@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, url_for, request, flash, session, Response
+from flask import Flask, redirect, render_template, url_for, request, flash, session, Response, jsonify
 from flask_cors import CORS
 from alchemyClasses import db
 from controller.catalogue import catalogue
@@ -120,6 +120,33 @@ def agregarOpinion():
             db.session.add(compra)
             db.session.commit()                
         return json.dumps({'listo':'usuario'})
+    
+@app.route('/buscar', methods=['GET'])
+def buscar_productos():
+    query = request.args.get('query', '')
+    if query.isdigit():
+        productos = Producto.query.filter(
+            (Producto.idProducto == int(query)) |
+            (Producto.idCategoria == int(query))
+        ).all()
+    else:
+        productos = Producto.query.filter(
+            Producto.nombre.like(f'%{query}%')
+        ).all()
+    
+    resultados = [
+        {
+            'idProducto': p.idProducto,
+            'idVendedor': p.idVendedor,
+            'idCategoria': p.idCategoria,
+            'nombre': p.nombre,
+            'descripcion': p.descripcion,
+            'precio': p.precio,
+            'stock': p.stock
+        } for p in productos
+    ]
+    
+    return jsonify(resultados)
 
 @app.route('/logout')
 def logout():
