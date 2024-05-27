@@ -37,7 +37,7 @@ function LogInForm (props) {
     }
     return (
         // <div className="area">
-            <span className="logo-log">
+            <div className="logo-log">
                 <img src={logo} alt="MerkApp's logo"/>
                 <h1>MerkApp</h1>
                 <div className="wrapper fadeInDown">
@@ -84,7 +84,7 @@ function LogInForm (props) {
                         </div>
                     </div>
                 </div>
-            </span>
+            </div>
         // </div>
     )
 }
