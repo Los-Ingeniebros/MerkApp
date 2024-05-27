@@ -30,11 +30,12 @@ class Producto(db.Model):
     #telefono = Column(String(10), foreign_key=True)
     #correo = Column(String(500), foreign_key=True)
 
-    def __init__(self, idProducto, idVendedor, idCategoria, nombre, precio, stock, fotoDeProducto):
+    def __init__(self, idProducto, idVendedor, idCategoria, nombre, descripcion, precio, stock, fotoDeProducto):
         self.idProducto = idProducto
         self.idVendedor = idVendedor
         self.idCategoria = idCategoria
         self.nombre = nombre
+        self.descripcion = descripcion
         self.precio = precio
         self.stock = stock
         self.fotoDeProducto = fotoDeProducto

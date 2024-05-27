@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './BuscarProducto.css';
 
 const BuscarProducto = ({ onSearch }) => {
   const [query, setQuery] = useState('');

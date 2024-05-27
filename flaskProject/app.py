@@ -126,18 +126,18 @@ def agregarOpinion():
 @app.route('/buscar', methods=['GET'])
 def buscar_productos():
     query = request.args.get('query', '')
+    categoria_nombre = request.args.get('categoria', '')
     if query.isdigit():
         productos = Producto.query.filter(
             (Producto.idProducto == int(query)) |
             (Producto.idCategoria == int(query))
         ).all()
     else:
-        categoria_alias = aliased(Categoria)
-        productos = Producto.query.join(categoria_alias, Producto.idCategoria == categoria_alias.idCategoria).filter(
+        productos = Producto.query.join(Categoria, Producto.idCategoria == Categoria.idCategoria).filter(
             (Producto.nombre.like(f'%{query}%')) |
-            (categoria_alias.nombre.like(f'%{query}%'))
+            (Categoria.nombre.like(f'%{categoria_nombre}%') if categoria_nombre else True)
         ).all()
-    
+
     resultados = [
         {
             'idProducto': p.idProducto,

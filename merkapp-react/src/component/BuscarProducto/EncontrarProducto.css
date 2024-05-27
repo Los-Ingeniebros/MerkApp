@@ -1,0 +1,35 @@
+.resultados {
+  margin-top: 20px;
+}
+
+.resultados ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.producto-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 14px; /* Reduce the font size */
+}
+
+.producto-info {
+  flex: 1;
+}
+
+.comprar-btn {
+  padding: 5px 10px; /* Smaller padding for smaller button */
+  font-size: 12px; /* Smaller font size for button */
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.comprar-btn:hover {
+  background-color: #218838;
+}
