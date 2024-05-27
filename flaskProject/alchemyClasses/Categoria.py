@@ -12,5 +12,5 @@ class Categoria(db.Model):
         self.idCategoria = idCategoria
         self.nombre = nombre
 
-    def __str__(self):
-        return f'Nombre: {self.nombre}\n - Id: {self.idCategoria}\n'
+    # def __str__(self):
+    #     return f'Nombre: {self.nombre}\n - Id: {self.idCategoria}\n'
