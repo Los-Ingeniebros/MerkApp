@@ -7,6 +7,7 @@ from alchemyClasses.Vendedor import Vendedor
 from alchemyClasses.Producto import Producto
 from alchemyClasses.Comprar import Comprar
 from alchemyClasses.Categoria import Categoria
+from sqlalchemy.orm import aliased
 import json
 
 app = Flask(__name__)
@@ -158,19 +159,22 @@ def agregarOpinion():
             db.session.commit()
         return json.dumps({'listo':'usuario'})
     
+
 @app.route('/buscar', methods=['GET'])
 def buscar_productos():
     query = request.args.get('query', '')
+    categoria_nombre = request.args.get('categoria', '')
     if query.isdigit():
         productos = Producto.query.filter(
             (Producto.idProducto == int(query)) |
             (Producto.idCategoria == int(query))
         ).all()
     else:
-        productos = Producto.query.filter(
-            Producto.nombre.like(f'%{query}%')
+        productos = Producto.query.join(Categoria, Producto.idCategoria == Categoria.idCategoria).filter(
+            (Producto.nombre.like(f'%{query}%')) |
+            (Categoria.nombre.like(f'%{categoria_nombre}%') if categoria_nombre else True)
         ).all()
-    
+
     resultados = [
         {
             'idProducto': p.idProducto,
@@ -182,7 +186,12 @@ def buscar_productos():
             'stock': p.stock
         } for p in productos
     ]
-    
+    return jsonify(resultados)
+
+@app.route('/categorias', methods=['GET'])
+def obtener_categorias():
+    categorias = Categoria.query.all()
+    resultados = [{'idCategoria': c.idCategoria, 'nombre': c.nombre} for c in categorias]
     return jsonify(resultados)
 
 @app.route('/logout')
