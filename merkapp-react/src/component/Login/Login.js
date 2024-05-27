@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import './Login.css';
 
 import logo from '../../imagenes/MerkAppSinFondo.png';
+import { useNavigate } from "react-router-dom";
 
 // import scrpt from './script.js';
 
@@ -10,22 +11,20 @@ function LogInForm (props) {
     const [enteredContrasenia, setContrasenia] = useState('');
     const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
     const opciones = ["Vendedor", "Comprador"];
+    const navigate = useNavigate();
+
 
     const correoChangeHandler = (event) => {
         setCorreo(event.target.value);
     }
-
     const contraseniaChangeHandler = (event) => {
         setContrasenia(event.target.value);
     }
-
     const opcionChangeHandler = (elemento) => {
         setOpcionSeleccionada(elemento);
     };
-
     const submitHandler = (event) => {
         event.preventDefault();
-
         const user = {
             correo:enteredCorreo,
             contrasenia:enteredContrasenia,
@@ -36,7 +35,6 @@ function LogInForm (props) {
         setContrasenia('');
         setOpcionSeleccionada('');
     }
-
     return (
         // <div className="area">
             <span className="logo-log">
@@ -80,6 +78,9 @@ function LogInForm (props) {
                                     <button type="submit" id="submit" className="boton-animado">Ingresar</button>
                                 </div>
                             </form>
+                            <div className="boton">
+                                <button type="submit" className='boton-animado' onClick={() =>navigate('/register')} >¿No tiene cuenta? Registrarse</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -87,5 +88,4 @@ function LogInForm (props) {
         // </div>
     )
 }
-
 export default LogInForm;

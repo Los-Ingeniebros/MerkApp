@@ -9,9 +9,16 @@ import HomeComprador from '../HomeComprador/HomeComprador';
 import Crear from '../CrearVenta/CrearVenta';
 import Eliminar from '../EliminarVentas/EliminarVentas';
 import AgregarOpinion from '../AgregarOpinion/AgregarOpinion';
+import BuscarProducto from '../BuscarProducto/BuscarProducto';
+import EncontrarProducto from '../BuscarProducto/EncontrarProducto';
+import logo from '../../imagenes/MerkAppSinFondo.png';
+import RequireAuth from '../Prueba/WihAuth';
+import MiPaginaProtegida from '../Prueba/P1';
+import Registro from '../Registrarse/Registro';
+import Home from '../Home/Home';
+import ModificarVentas from '../ModificarVentas/ModificarVentas';
 
 function App() {
-
   const [user, setUser] = useState('');
   const [users, setUsers] = useState('');
   const [categorias, setCategorias] = useState('');
@@ -139,35 +146,40 @@ function App() {
   }, [location.pathname]);
 
   return (
-    <div className='login'>
-      <div className="area">
-        <ul className="circles">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-        <div className='container'>
+  <div className='login'>
+    <div className="area" >
+      <ul className="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <div className='container'>
           <header className="App-header" id="app-header">
-                <Routes>
-                  <Route path="/" element={<LogInForm onSaveName={ingresar}/>} />
-                  <Route path="/vendedor" element={HomeVendedor(user)} />
-                  <Route path="/comprador" element={HomeComprador(user)} />
-                  <Route path="/vendedor/crear" element={Crear(user, categorias)} />
-                  <Route path="/vendedor/eliminar" element={Eliminar(users)} />
-                  <Route path="/comprador/agregar" element={AgregarOpinion(user)} />
-                  <Route path="/login" element={<LogInForm onSaveName={ingresar}/>} />
-                </Routes>
+              <Routes>
+                <Route path="/" element={Home()} />
+                <Route path="/vendedor" element={HomeVendedor(user)} />
+                <Route path="/comprador" element={HomeComprador(user)} />
+                <Route path="/vendedor/crear" element={Crear(user, categorias)} />
+                <Route path="/vendedor/eliminar" element={Eliminar(users)} />  
+                <Route path="/vendedor/modificar" element={ModificarVentas(users)} /> 
+                <Route path="/comprador/agregar" element={AgregarOpinion(user)} />  
+                <Route path="/comprador/buscar" element={<EncontrarProducto />} />
+                <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  
+                <Route path='/ola' element={MiPaginaProtegida()} />
+                <Route path='/register' element={Registro()} />
+              </Routes>
           </header>
-        </div>
-      </div >
-    </div>
+      </div>
+    </div >
+  </div>
   );
 }
 

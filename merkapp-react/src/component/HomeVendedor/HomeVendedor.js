@@ -22,6 +22,10 @@ function HomeVendedor(name){
         navigate('/vendedor/eliminar');
     };
 
+    function modificar () {
+        navigate('/vendedor/modificar');                
+    };
+
     return (
         // <div className="fondoVendedor">
         
@@ -39,6 +43,8 @@ function HomeVendedor(name){
                     Hola {name[0]} {name[1]}
                     <div>
                         <button className="boton-animado" onClick={() => crear()}>Crear venta</button>
+                        <br></br>
+                        <button className="boton-animado" onClick={() => modificar()}>Modificar venta(s)</button>
                         <br></br>
                         <button className="boton-animado" onClick={() => eliminar()}>Eliminar venta(s)</button>
                         <br></br>

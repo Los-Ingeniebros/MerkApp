@@ -18,6 +18,10 @@ function HomeComprador(name){
         navigate('/comprador/agregar');
     };
 
+    function buscar () {
+        navigate('/comprador/buscar');                
+    };
+
     return (
         // <div className="fondoComprador">
             <form onSubmit={submitHandler}>
@@ -33,6 +37,8 @@ function HomeComprador(name){
                     Hola {name[0]} {name[1]}
                     <div>
                         <button className="boton-animado" onClick={() => agregar()}>Agregar opinión</button>
+                        <br></br>
+                        <button className="boton-animado" onClick={() => buscar()}>Buscar productos</button>
                         <br></br>
                         <button className="boton-animado" type="submit">Cerrar sesión</button>
                     </div>
