@@ -41,7 +41,7 @@ function HomeVendedor(name){
                 <br></br>
                 <div>
                     Hola {name[0]} {name[1]}
-                    <div>
+                    <div className="logo-log">
                         <button className="boton-animado" onClick={() => crear()}>Crear venta</button>
                         <br></br>
                         <button className="boton-animado" onClick={() => modificar()}>Modificar venta(s)</button>

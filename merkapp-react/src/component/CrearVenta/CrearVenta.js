@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
+import logo from '../../imagenes/MerkAppSinFondo.png';
+
 function CrearVenta (user, categorias) {
     const navigate = useNavigate();
 
@@ -62,6 +64,14 @@ function CrearVenta (user, categorias) {
 
     return (
         <form onSubmit={submitHandler}>
+            <div className="logopequeno">
+                    <img src={logo} alt="MerkApp's logo"/>
+                    Merkapp
+                </div>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
             Producto nuevo
             <div>
                 <label>Nombre: </label>
@@ -125,7 +135,9 @@ function CrearVenta (user, categorias) {
             {/* <div>
                 <label>Fotografía: </label>
             </div> */}
-            <button type="submit" onClick={ventaChangeHandler}>Agregar</button>
+            <div className="logo-log">
+                <button type="submit" className="boton-animado" onClick={ventaChangeHandler}>Agregar</button>
+            </div>
         </form>
     );
 };
