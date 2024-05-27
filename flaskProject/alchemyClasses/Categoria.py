@@ -5,8 +5,8 @@ from flask import Flask, redirect, render_template, url_for, request, flash, ses
 class Categoria(db.Model):
 
     __tablename__ = 'categoria'
-    idCategoria = Column(Integer, nullable=False, primary_key=True)
-    nombre = Column(String(200), nullable=False)
+    idCategoria = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(50), nullable=False)
 
     def __init__(self, idCategoria, nombre):
         self.idCategoria = idCategoria

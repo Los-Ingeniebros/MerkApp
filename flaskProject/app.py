@@ -7,6 +7,7 @@ from alchemyClasses.Vendedor import Vendedor
 from alchemyClasses.Producto import Producto
 from alchemyClasses.Comprar import Comprar
 from alchemyClasses.Categoria import Categoria
+from sqlalchemy.orm import aliased
 import json
 
 app = Flask(__name__)
@@ -121,6 +122,7 @@ def agregarOpinion():
             db.session.commit()                
         return json.dumps({'listo':'usuario'})
     
+
 @app.route('/buscar', methods=['GET'])
 def buscar_productos():
     query = request.args.get('query', '')
@@ -130,8 +132,10 @@ def buscar_productos():
             (Producto.idCategoria == int(query))
         ).all()
     else:
-        productos = Producto.query.filter(
-            Producto.nombre.like(f'%{query}%')
+        categoria_alias = aliased(Categoria)
+        productos = Producto.query.join(categoria_alias, Producto.idCategoria == categoria_alias.idCategoria).filter(
+            (Producto.nombre.like(f'%{query}%')) |
+            (categoria_alias.nombre.like(f'%{query}%'))
         ).all()
     
     resultados = [
@@ -145,7 +149,12 @@ def buscar_productos():
             'stock': p.stock
         } for p in productos
     ]
-    
+    return jsonify(resultados)
+
+@app.route('/categorias', methods=['GET'])
+def obtener_categorias():
+    categorias = Categoria.query.all()
+    resultados = [{'idCategoria': c.idCategoria, 'nombre': c.nombre} for c in categorias]
     return jsonify(resultados)
 
 @app.route('/logout')

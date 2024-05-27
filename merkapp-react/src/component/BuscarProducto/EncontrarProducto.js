@@ -12,7 +12,7 @@ const EncontrarProducto = () => {
 
   return (
     <div>
-      <h1>Buscar Productos</h1>
+      <h1></h1>
       <BuscarProducto onSearch={handleSearch} />
       <div className="resultados">
         {productos.length > 0 ? (
