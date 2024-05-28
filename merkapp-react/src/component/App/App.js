@@ -125,8 +125,8 @@ function App() {
   }, [location.pathname]);
 
   return (
-    <div className='login'>
-    <div className="area" >
+    <div>
+    <div>
       <ul className="circles">
         <li></li>
         <li></li>
@@ -141,7 +141,7 @@ function App() {
         <li>Ola</li>
       </ul>
       <div className='container'>
-        <header className="App-header" id="app-header">
+        <div>
           <span className="logo-log">
             <img src={logo} alt="MerkApp's logo"/>
             <h1>MerkApp</h1>            
@@ -158,7 +158,7 @@ function App() {
                 <Route path='/register' element={Registro()} />
               </Routes>            
           </span>
-        </header>
+        </div>
       </div>
     </div >
   </div>

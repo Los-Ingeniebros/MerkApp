@@ -12,7 +12,7 @@ import json
 app = Flask(__name__)
 app.register_blueprint(catalogue)
 app.config['SECRET_KEY'] = 'dev'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ing:Developer123!@localhost:3306/base_merkaap'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ferfong:Develooper123!@localhost:3306/base_merkaap'
 db.init_app(app)
 CORS(app)
 
@@ -126,6 +126,17 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
+@app.route('/register',  methods=['GET', 'POST'])
+def register():
+    if session.get('user_id') != None:
+        return render_template('login.html', user=session['user_id'])    
+    if request.method == 'GET':        
+        return render_template('index.html')
+    if request.method == 'POST':
+        correo = request.json['correo']
+        contrasenia = request.json['contrasenia']
+        print("asulito")
+        return json.dumps({'listo':correo, 'contra':contrasenia})
 
 if __name__ == '__main__':
     app.run()
