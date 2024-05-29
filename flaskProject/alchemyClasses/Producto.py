@@ -10,7 +10,7 @@ class Producto(db.Model):
     idProducto = db.Column(db.Integer, primary_key=True)
 
     #idVendedor = Column(Integer, nullable=False)
-    idVendedor = db.Column(db.Integer, nullable=False)
+    idVendedor = db.Column(db.Integer, db.ForeignKey('vendedor.idVendedor'), nullable=False)
 
     #idCategoria = Column(Integer, nullable=False)
     idCategoria = db.Column(db.Integer, db.ForeignKey('categoria.idCategoria'), nullable=False)

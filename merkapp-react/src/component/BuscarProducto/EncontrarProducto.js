@@ -30,8 +30,8 @@ const EncontrarProducto = () => {
                   <p>Precio: {producto.precio}</p>
                   <p>Stock: {producto.stock}</p>
                 </div>
-                <button className="comprar-btn" onClick={() => handleCompra(producto.idProducto)}>
-                  Comprar
+                <button className="boton-animado" onClick={() => handleCompra(producto.idProducto)}>
+                  Más detalles
                 </button>
               </li>
             ))}
