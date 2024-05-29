@@ -23,7 +23,7 @@ function HomeVendedor(name){
     };
 
     function modificar () {
-        navigate('/vendedor/modificar');                
+        navigate('/vendedor/ventas');                
     };
 
     return (
