@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+//import axios from "axios";
 import './App.css';
 import LogInForm from '../Login/Login';
 import HomeVendedor from '../HomeVendedor/HomeVendedor';
@@ -16,7 +17,8 @@ import RequireAuth from '../Prueba/WihAuth';
 import MiPaginaProtegida from '../Prueba/P1';
 import Registro from '../Registrarse/Registro';
 import Home from '../Home/Home';
-import ModificarVentas from '../ModificarVentas/ModificarVentas';
+import Modificar from '../ModificarVenta/ModificarVenta';
+import Listar from '../ModificarVenta/ListarVentas';
 
 function App() {
   const [user, setUser] = useState('');
@@ -142,6 +144,11 @@ function App() {
       recuperar();
     } else if (location.pathname === '/vendedor/crear') {
       recuperarCategorias();
+    } else if (location.pathname === '/vendedor/modificar/:idProducto') {
+      recuperarCategorias();
+    } else if (location.pathname === '/vendedor/ventas') {
+      recuperarCategorias();
+      recuperar();
     }
   }, [location.pathname]);
 
@@ -168,8 +175,9 @@ function App() {
                 <Route path="/vendedor" element={HomeVendedor(user)} />
                 <Route path="/comprador" element={HomeComprador(user)} />
                 <Route path="/vendedor/crear" element={Crear(user, categorias)} />
-                <Route path="/vendedor/eliminar" element={Eliminar(users)} />  
-                <Route path="/vendedor/modificar" element={ModificarVentas(users)} /> 
+                <Route path="/vendedor/eliminar" element={Eliminar(users)} />
+                <Route path="/vendedor/ventas" element={Listar (users) } />
+                <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />
                 <Route path="/comprador/agregar" element={AgregarOpinion(user)} />  
                 <Route path="/comprador/buscar" element={<EncontrarProducto />} />
                 <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  

@@ -108,6 +108,27 @@ def crearVenta():
         
         return json.dumps({'listo':'usuario'})
 
+
+@app.route('/modificarVenta', methods=['PUT'])
+def modificar_venta():
+    updated_venta = request.json
+    
+    print("Venta actualizada:", updated_venta)
+    
+    producto = Producto.query.filter_by(idProducto=updated_venta['idProducto']).first()
+    
+    if producto:
+        producto.nombre = updated_venta['nombre']
+        producto.idCategoria = updated_venta['idCategoria']
+        producto.descripcion = updated_venta['descripcion']
+        producto.precio = updated_venta['precio']
+        producto.stock = updated_venta['stock']
+        
+        db.session.commit()
+        return jsonify({'message': 'Venta modificada con éxito'})
+    else:
+        return jsonify({'error': 'Producto no encontrado'}), 404 
+
 @app.route('/eliminarVentas', methods=['GET', 'POST', 'OPTIONS'])
 def eliminarVentas():
     if request.method == 'OPTIONS':
