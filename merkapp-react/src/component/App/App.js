@@ -176,12 +176,8 @@ function App() {
                 <Route path="/comprador" element={HomeComprador(user)} />
                 <Route path="/vendedor/crear" element={Crear(user, categorias)} />
                 <Route path="/vendedor/eliminar" element={Eliminar(users)} />
-                
                 <Route path="/vendedor/ventas" element={Listar (users) } />
-                
-                
                 <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />
-
                 <Route path="/comprador/agregar" element={AgregarOpinion(user)} />  
                 <Route path="/comprador/buscar" element={<EncontrarProducto />} />
                 <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  
@@ -196,7 +192,3 @@ function App() {
 }
 
 export default App;
-
-// <Modificar user={user} categorias={categorias || {}} />
-// <Route path="/vendedor/modificar" element={Modificar(user, categorias)} />
-// <Route path="/vendedor/modificar/:idProducto" element={Modificar (user, categorias)} />
