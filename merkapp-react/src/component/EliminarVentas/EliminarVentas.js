@@ -33,7 +33,7 @@ function EliminarVentas (lista) {
         <form onSubmit={submitHandler}>
             <div>
             <ul>
-                {Object.entries(lista).map(([key, value]) => (                
+                {lista && Object.entries(lista).map(([key, value]) => (                
                     <div>
                         <input 
                         type="checkbox" 

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function AgregarOpinion (user) {
+    const { key } = useParams();
     const navigate = useNavigate();
     const [enteredCalificacion, setCalificacion] = useState('');
     const [enteredComentario, setComentario] = useState('');
-    const [opinion, setOpinion] = useState('');    
+    const [opinion, setOpinion] = useState('');        
 
     const calificacionChangeHandler = (event) => {
         setCalificacion(event.target.value);
@@ -20,9 +21,8 @@ function AgregarOpinion (user) {
     };
 
     const submitHandler = async (event) => {
-        event.preventDefault();
-        console.log(opinion);
-        var lista = [user, opinion]
+        event.preventDefault();    
+        var lista = [user, opinion, key]
         const response = await fetch('http://127.0.0.1:5000/agregarOpinion', {
             method:'POST',
             body: JSON.stringify(lista),
@@ -32,12 +32,11 @@ function AgregarOpinion (user) {
         });
         console.log(response);
         const data = await response.json();    
-        console.log(data);
-        
+        console.log(data);        
         navigate('/comprador');
         setOpinion('');
         setCalificacion('');
-        setComentario('');
+        setComentario('');        
     };
 
     return ( 
