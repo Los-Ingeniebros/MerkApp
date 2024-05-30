@@ -25,6 +25,7 @@ function EliminarVentas (lista) {
         console.log(response);
         const data = await response.json();    
         console.log(data);
+        alert("Los productos se eliminaron correctamente");
         navigate('/vendedor');
         setElementosSeleccionados('');
     };
@@ -32,6 +33,8 @@ function EliminarVentas (lista) {
     return ( 
         <form onSubmit={submitHandler}>
             <div>
+            <h1>Cantidad de productos en venta: {lista && lista.length > 0 ? lista.length : 0}</h1>
+            {lista.length > 0 ? 'Selecciona los productos que quieres eliminar:' : ''}
             <ul>
                 {lista && Object.entries(lista).map(([key, value]) => (                
                     <div>

@@ -146,10 +146,34 @@ function App() {
     } else if (location.pathname === '/login') {
       Cookies.remove('user');
     } else if (location.pathname === '/vendedor/eliminar') {
+      almacenadoUser = Cookies.get('user');
+      if (almacenadoUser) {
+        almacenadoUser = almacenadoUser.split(",");
+        setUser(almacenadoUser);
+        console.log('Nombre de usuario recuperado:', almacenadoUser);
+        if (almacenadoUser[0] === 'Comprador'){
+          navigate('/comprador');
+        }
+      } else {
+        Cookies.set('user', user);
+        console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+      }
       recuperarVentas();      
     } else if (location.pathname === '/comprador/consultar') {      
       recuperarProductos();      
     } else if (location.pathname === '/vendedor/crear') {
+      almacenadoUser = Cookies.get('user');
+      if (almacenadoUser) {
+        almacenadoUser = almacenadoUser.split(",");
+        setUser(almacenadoUser);
+        console.log('Nombre de usuario recuperado:', almacenadoUser);
+        if (almacenadoUser[0] === 'Comprador'){
+          navigate('/comprador');
+        }
+      } else {
+        Cookies.set('user', user);
+        console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+      }
       recuperarCategorias();
     } else if (location.pathname === '/vendedor/modificar/:idProducto') {
       recuperarCategorias();
@@ -180,9 +204,8 @@ function App() {
       </ul>
       <div className='container'>
         <div>
-          <span className="logo-log">
-            <a href='/'> <img src={logo} alt="MerkApp's logo"/></a>
-            <h1>MerkApp</h1>         
+          <span className="logo-log">                        
+            <header className="App-header" id="app-header">
               <Routes>
                 <Route path="/" element={Home()} />
                 <Route path="/vendedor" element={HomeVendedor(user)} />
@@ -198,7 +221,8 @@ function App() {
                 <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  
                 <Route path='/ola' element={MiPaginaProtegida()} />
                 <Route path='/register' element={<RequireAuth> <Registro /> </RequireAuth>} />
-              </Routes>                          
+              </Routes>                                    
+              </header>             
           </span>
         </div>
       </div>
