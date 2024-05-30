@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
     const navigate = useNavigate();
   return <> 
-  <div>Bienvenido a nuestro sistema</div>
-  <div className='col'>
-    <button onClick={() =>navigate('/login')}>Iniciar Sesion</button>
-    <button onClick={() =>navigate('/register')}>Registrarse</button>
+  <div className="logo-log">Bienvenid@ a nuestro sistema</div>
+  <br></br>
+  <div className="logo-log">
+    <button className='boton-animado' onClick={() =>navigate('/login')}>Iniciar Sesion</button>
+    <br></br>
+    <button className='boton-animado' onClick={() =>navigate('/register')}>Registrarse</button>
   </div>
   </>
 };
