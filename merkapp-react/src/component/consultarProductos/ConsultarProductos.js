@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ConsultarProductos (lista) {
     const navigate = useNavigate();
-    const [elementoSeleccionado, setElementoSeleccionado] = useState(null); 
+    const [elementoSeleccionado, setElementoSeleccionado] = useState(''); 
 
     const elementoSeleccionadoHandler = (key) => {        
         setElementoSeleccionado(key);     

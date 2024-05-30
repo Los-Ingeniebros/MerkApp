@@ -37,7 +37,7 @@ function ListarVentas (lista) {
         <div>
             <form onSubmit={submitHandler}>
                 <ul>
-                    {Object.entries(lista).map(([key, value]) => (
+                    {lista && Object.entries(lista).map(([key, value]) => (
                         <li key={key} className="producto-item">
                             <div className="producto-info">
                                 <h2>Identificador {key}</h2>

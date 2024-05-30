@@ -19,9 +19,9 @@ import Registro from '../Registrarse/Registro';
 import Home from '../Home/Home';
 import Modificar from '../ModificarVenta/ModificarVenta';
 import Listar from '../ModificarVenta/ListarVentas';
-
 import ConsultarProductos from '../ConsultarProductos/ConsultarProductos';
 import Producto from '../Producto/Producto';
+
 
 function App() {
   const [user, setUser] = useState('');
@@ -68,12 +68,7 @@ function App() {
     });
     const data = await response.json();
     console.log(data);
-    //console.log(typeof data['dic']);
-    //console.log(data['dic']);
-    //const usuarios = JSON.parse(data['lista']);
-    //console.log(usuarios);
-    //setUsers(usuarios);
-    setUsers(data['dic']);
+    setVentas(data['dic']);
   };
 
   async function recuperarCategorias () {
@@ -86,7 +81,7 @@ function App() {
     });
     const data = await response.json();
     console.log(data);
-    setVentas(data['dic']);    
+    setCategorias(data['cat']);    
   };
   
   async function recuperarProductos () {
@@ -149,16 +144,15 @@ function App() {
       Cookies.remove('user');
     } else if (location.pathname === '/vendedor/eliminar') {
       recuperarVentas();      
-    } else if (location.pathname === '/comprador/consultar') {
-      recuperarProductos();
-      recuperar();
+    } else if (location.pathname === '/comprador/consultar') {      
+      recuperarProductos();      
     } else if (location.pathname === '/vendedor/crear') {
       recuperarCategorias();
     } else if (location.pathname === '/vendedor/modificar/:idProducto') {
       recuperarCategorias();
     } else if (location.pathname === '/vendedor/ventas') {
-      recuperarCategorias();
-      recuperar();
+      recuperarCategorias();     
+      recuperarVentas(); 
     }
   }, [location.pathname]);
 
@@ -184,15 +178,13 @@ function App() {
                 <Route path="/" element={Home()} />
                 <Route path="/vendedor" element={HomeVendedor(user)} />
                 <Route path="/comprador" element={HomeComprador(user)} />
+                <Route path="/vendedor/crear" element={Crear(user, categorias)} /> 
                 <Route path="/vendedor/eliminar" element={Eliminar(ventas)} />  
-                <Route path="/vendedor/modificar" element={ModificarVentas(ventas)} /> 
                 <Route path="/comprador/consultar" element={ConsultarProductos(productos)} />
                 <Route path="/comprador/producto/:key" element={<Producto />} />                
-                <Route path="/comprador/calificacion/:key" element={<AgregarOpinion user = {user}/>} />                  
-                <Route path="/vendedor/crear" element={Crear(user, categorias)} />                
+                <Route path="/comprador/calificacion/:key" element={<AgregarOpinion user = {user}/>} />                                                 
                 <Route path="/vendedor/ventas" element={Listar (ventas) } />
-                <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />                 
-                <Route path="/comprador/buscar" element={BuscarProducto(user)} />
+                <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />                                 
                 <Route path="/comprador/buscar" element={<EncontrarProducto />} />
                 <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  
                 <Route path='/ola' element={MiPaginaProtegida()} />
