@@ -229,6 +229,7 @@ function App() {
                 <Route path='/register' element={<RequireAuth> <Registro /> </RequireAuth>} />
               </Routes>          
           </span>
+          </div>
         </div>
       </div>
     </div>
