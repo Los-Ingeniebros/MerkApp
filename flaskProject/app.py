@@ -53,11 +53,11 @@ def login():
             return json.dumps({'nombre': encontrado.nombre, 'correo': encontrado.correo, 'contrasenia': encontrado.contrasenia, 'modo': modo})
         flash('Invalid username or password')
         return json.dumps({'error':'Invalid username or password'})
-
-@app.route('/recuperar', methods=['GET', 'POST', 'OPTIONS'])
-def recuperarVentas():
-    if request.method == 'OPTIONS':
-        res = Response()
+    
+@app.route('/recuperarVentas', methods=['GET', 'POST', 'OPTIONS'])
+def recuperarVentas(): 
+    if request.method == 'OPTIONS':                   
+        res = Response()        
         res.headers['X-Content-Type-Options'] = '*'
         return res
     elif request.method == 'POST':
@@ -148,36 +148,65 @@ def eliminarVentas():
             db.session.commit()
         return json.dumps({'listo':'usuario'})
 
+@app.route('/recuperarProductos', methods=['GET', 'POST', 'OPTIONS'])
+def recuperarProductos(): 
+    if request.method == 'OPTIONS':                   
+        res = Response()        
+        res.headers['X-Content-Type-Options'] = '*'
+        return res
+    elif request.method == 'GET':
+        diccionario = {}        
+        for registro in Producto.query.all():
+            categoria = Categoria.query.filter(Categoria.idCategoria == registro.idCategoria).first()
+            producto = {registro.idProducto:[registro.nombre, categoria.nombre, registro.precio , registro.stock]}
+            diccionario.update(producto)    
+        return json.dumps({'dic': diccionario})
+
+@app.route('/recuperarProducto', methods=['GET', 'POST', 'OPTIONS'])
+def recuperarProducto(): 
+    if request.method == 'OPTIONS':                   
+        res = Response()        
+        res.headers['X-Content-Type-Options'] = '*'
+        return res
+    elif request.method == 'POST':
+        id = request.json
+        producto = Producto.query.filter(Producto.idProducto == id).first()                
+        categoria = Categoria.query.filter(Categoria.idCategoria == producto.idCategoria).first()        
+        comentarios = []
+        for comentario in Comprar.query.filter(Comprar.idProducto == producto.idProducto).all():
+            comprador = Comprador.query.filter(Comprador.idComprador == comentario.idComprador).first()
+            comentarios.append([comentario.calificacion, comprador.nombre, comentario.comentario])
+        producto = {producto.idProducto:[producto.nombre, categoria.nombre, producto.precio , producto.stock, comentarios]}
+        return json.dumps({'producto': producto})
+
 @app.route('/agregarOpinion', methods=['GET', 'POST', 'OPTIONS'])
 def agregarOpinion():
     if request.method == 'OPTIONS':
         res = Response()
         return res
-    elif request.method == 'POST':
-        usuario = request.json[0]
+    elif request.method == 'POST':        
+        usuario = request.json[0]['user']
         opinion = request.json[1]
-        
-        idCompra = 1
+        idProducto = request.json[2]
+
+        id = 1
         for registro in Comprar.query.all():
-            idCompra += 1
-
-        idProducto = 1
-        for registro in Producto.query.all():
-            idProducto += 1
-
+            id += 1
+        
         comprador = Comprador.query.filter(Comprador.correo == usuario[2], Comprador.contrasenia == usuario[3]).first()
+
         if opinion[0] != '' and opinion[1] != '':
-            compra = Comprar(idCompra, comprador.idComprador, idProducto, opinion[1], opinion[0])
+            compra = Comprar(id, comprador.idComprador, int(idProducto), opinion[1], opinion[0])
             db.session.add(compra)
             db.session.commit()
         elif opinion[0] == '' and opinion[1] != '':
-            compra = Comprar(id, comprador.idComprador, 10, opinion[1], 0)
+            compra = Comprar(id, comprador.idComprador, int(idProducto), opinion[1], 0)
             db.session.add(compra)
             db.session.commit()
         elif opinion[0] != '' and opinion[1] == '':
-            compra = Comprar(id, comprador.idComprador, 10, opinion[1], opinion[0])
+            compra = Comprar(id, comprador.idComprador, int(idProducto), opinion[1], opinion[0])
             db.session.add(compra)
-            db.session.commit()
+            db.session.commit()      
         return json.dumps({'listo':'usuario'})
     
 

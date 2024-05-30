@@ -20,9 +20,13 @@ import Home from '../Home/Home';
 import Modificar from '../ModificarVenta/ModificarVenta';
 import Listar from '../ModificarVenta/ListarVentas';
 
+import ConsultarProductos from '../ConsultarProductos/ConsultarProductos';
+import Producto from '../Producto/Producto';
+
 function App() {
   const [user, setUser] = useState('');
-  const [users, setUsers] = useState('');
+  const [ventas, setVentas] = useState('');
+  const [productos, setProductos] = useState('');  
   const [categorias, setCategorias] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
@@ -54,8 +58,8 @@ function App() {
     }
   };
 
-  async function recuperar () {
-    const response = await fetch('http://127.0.0.1:5000/recuperar', {
+  async function recuperarVentas () {
+    const response = await fetch('http://127.0.0.1:5000/recuperarVentas', {
       method:'POST',
       body: JSON.stringify(user),
       headers: {
@@ -82,11 +86,14 @@ function App() {
     });
     const data = await response.json();
     console.log(data);
-    //console.log(typeof data['dic']);
-    //console.log(data['dic']);
-    //const usuarios = JSON.parse(data['lista']);
-    //console.log(usuarios);
-    //setUsers(usuarios);
+    setVentas(data['dic']);    
+  };
+  
+  async function recuperarProductos () {
+    const response = await fetch('http://127.0.0.1:5000/recuperarProductos');      
+    const data = await response.json();    
+    console.log(data);  
+    setProductos(data['dic']);    
     setCategorias(data['cat']);
   };
 
@@ -141,6 +148,9 @@ function App() {
     } else if (location.pathname === '/login') {
       Cookies.remove('user');
     } else if (location.pathname === '/vendedor/eliminar') {
+      recuperarVentas();      
+    } else if (location.pathname === '/comprador/consultar') {
+      recuperarProductos();
       recuperar();
     } else if (location.pathname === '/vendedor/crear') {
       recuperarCategorias();
@@ -174,11 +184,15 @@ function App() {
                 <Route path="/" element={Home()} />
                 <Route path="/vendedor" element={HomeVendedor(user)} />
                 <Route path="/comprador" element={HomeComprador(user)} />
-                <Route path="/vendedor/crear" element={Crear(user, categorias)} />
-                <Route path="/vendedor/eliminar" element={Eliminar(users)} />
-                <Route path="/vendedor/ventas" element={Listar (users) } />
-                <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />
-                <Route path="/comprador/agregar" element={AgregarOpinion(user)} />  
+                <Route path="/vendedor/eliminar" element={Eliminar(ventas)} />  
+                <Route path="/vendedor/modificar" element={ModificarVentas(ventas)} /> 
+                <Route path="/comprador/consultar" element={ConsultarProductos(productos)} />
+                <Route path="/comprador/producto/:key" element={<Producto />} />                
+                <Route path="/comprador/calificacion/:key" element={<AgregarOpinion user = {user}/>} />                  
+                <Route path="/vendedor/crear" element={Crear(user, categorias)} />                
+                <Route path="/vendedor/ventas" element={Listar (ventas) } />
+                <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />                 
+                <Route path="/comprador/buscar" element={BuscarProducto(user)} />
                 <Route path="/comprador/buscar" element={<EncontrarProducto />} />
                 <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  
                 <Route path='/ola' element={MiPaginaProtegida()} />
