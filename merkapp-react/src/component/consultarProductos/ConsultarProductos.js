@@ -12,7 +12,7 @@ function ConsultarProductos (lista) {
     
     return (         
         <ul>
-            {Object.entries(lista).map(([key, value]) => (                
+            {lista && Object.entries(lista).map(([key, value]) => (                
                 <div key={key}>                        
                     <label
                         type="submit" 
