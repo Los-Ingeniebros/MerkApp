@@ -253,13 +253,10 @@ def logout():
 
 @app.route('/register',  methods=['GET', 'POST'])
 def register():
-    if session.get('user') == None:
-        print("Pendientes")
-        print(session.get('user'))
-        # return render_template('login.html', user=session['user'])   
     if request.method == 'GET':        
         return render_template('index.html')
     if request.method == 'POST':
+        
         nombre = request.json['nombre']
         apellido = request.json['apellido']
         rol = request.json['rol']
@@ -267,18 +264,19 @@ def register():
         correo = request.json['correo']
         contrasenia = request.json['contrasenia']
         contra = sha256(contrasenia.encode('utf-8')).hexdigest()
-        print("asulito")
+        
 
         if(rol == 'Vendedor'):
             correo1 = Vendedor.query.filter_by(correo=correo).first()
             if correo1:
                 return json.dumps({'error':'correo repetido'})
-                # return json.dumps({'listo':nombre, 'correo':correo}) sha256(cipher("Developer123#")).hexdigest())  
+            
             nuevo_usuario = Vendedor(nombre,apellido,"",contra,numero,correo)
         else:
             correo1 = Comprador.query.filter_by(correo=correo).first()
             if correo1:
                 return json.dumps({'error':'correo repetido'})
+            
             nuevo_usuario = Comprador(nombre,apellido,"",contra,numero,correo)
         
         # Información del correo
@@ -296,11 +294,12 @@ def register():
             # Usar SMTP_SSL si el puerto es 465
             with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
                 smtp.login(correo_merkapp, contra_merkapp)
-                print(f"Enviando correo a {correo}")
+                print(f"Enviando correo")
                 smtp.send_message(msg)
-                print(f"Correo enviado a {correo}")
+                print(f"Correo enviado")
         except smtplib.SMTPException as e:
             print(f"Error al enviar el correo a {correo}: {e}")
+            
         db.session.add(nuevo_usuario)
         db.session.commit()
         return json.dumps({'listo':nombre, 'correo':correo})
