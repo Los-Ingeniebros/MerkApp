@@ -12,12 +12,12 @@ function HomeComprador(name){
         Cookies.remove('user');
         navigate('/login');
         Cookies.remove('user');
+    }     
+
+    function consultar () {
+        navigate('/comprador/consultar');                
     }
-
-    function agregar () {
-        navigate('/comprador/agregar');
-    };
-
+    
     function buscar () {
         navigate('/comprador/buscar');                
     };
@@ -36,7 +36,7 @@ function HomeComprador(name){
                     <br></br>
                     Hola {name[0]} {name[1]}
                     <div>
-                        <button className="boton-animado" onClick={() => agregar()}>Agregar opinión</button>
+                        <button className="boton-animado" onClick={() => consultar()}>Consultar productos</button>                        
                         <br></br>
                         <button className="boton-animado" onClick={() => buscar()}>Buscar productos</button>
                         <br></br>
