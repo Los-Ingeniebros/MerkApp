@@ -39,8 +39,8 @@ function App() {
       method:'POST',
       body: JSON.stringify(name),
       headers: {
-        'Content-Type':'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     });
     const data = await response.json();
     console.log(data);
@@ -95,23 +95,25 @@ function App() {
     setCategorias(data['cat']);
   };
 
-  useEffect(() => {            
-    if (location.pathname === '/') {            
+  useEffect(() => {
+    if (location.pathname === "/") {
       // Cookies.set('user', user);
-      var almacenadoUser = Cookies.get('user');
+      var almacenadoUser = Cookies.get("user");
       if (almacenadoUser) {
         //setUser(almacenadoUser);
         almacenadoUser = almacenadoUser.split(",");
-        console.log('Nombre de usuario recuperado:', almacenadoUser);
+        console.log("Nombre de usuario recuperado:", almacenadoUser);
         //Cookies.remove('user');
-        if (almacenadoUser[0] === 'Vendedor'){
-          navigate('/vendedor');
-        } else if (almacenadoUser[0] === 'Comprador'){
-          navigate('/comprador');
+        if (almacenadoUser[0] === "Vendedor") {
+          navigate("/vendedor");
+        } else if (almacenadoUser[0] === "Comprador") {
+          navigate("/comprador");
         }
       } else {
-        console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
-      }      
+        console.log(
+          "No se encontró ningún nombre de usuario almacenado en los cookies."
+        );
+      }
       //navigate('/home');
     } else if (location.pathname === '/vendedor') {
       almacenadoUser = Cookies.get('user');
@@ -187,25 +189,29 @@ function App() {
   //<Routes>
   
   return (
-  <div className='login'>
-    <div className="area" >
-      <ul className="circles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
-      <div className='container'>
-        <div>
-          <span className="logo-log">                        
-            <header className="App-header" id="app-header">
+    <div>
+      <div>
+        <ul className="circles">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li>Ola</li>
+        </ul>
+        <div className="container">
+          <div>
+            <span className="logo-log">
+              <a href="/">
+                {" "}
+                <img src={logo} alt="MerkApp's logo" />
+              </a>
+              <h1>MerkApp</h1>
               <Routes>
                 <Route path="/" element={Home()} />
                 <Route path="/vendedor" element={HomeVendedor(user)} />
@@ -221,13 +227,11 @@ function App() {
                 <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  
                 <Route path='/ola' element={MiPaginaProtegida()} />
                 <Route path='/register' element={<RequireAuth> <Registro /> </RequireAuth>} />
-              </Routes>                                    
-              </header>             
+              </Routes>          
           </span>
         </div>
       </div>
-    </div >
-  </div>
+    </div>
   );
 }
 
