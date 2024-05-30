@@ -60,9 +60,17 @@ def login():
 def recuperarVentas(): 
     if request.method == 'OPTIONS':                   
         res = Response()        
+        print()
+        print(res)
+        print()
         res.headers['X-Content-Type-Options'] = '*'
         return res
     elif request.method == 'POST':
+        print()
+        print(request.json)
+        if request.json == None:
+            print("ERROR")
+        print()
         correo = request.json[2]
         contrasenia = request.json[3]
         vendedor = Vendedor.query.filter(Vendedor.correo == correo, Vendedor.contrasenia == contrasenia).first()
@@ -96,7 +104,7 @@ def crearVenta():
         usuario = request.json[0]
         venta = request.json[1]
         
-        id = 3
+        id = 1
         for registro in Producto.query.all():
             id += 1
 
@@ -148,6 +156,11 @@ def eliminarVentas():
                 db.session.commit()
             db.session.delete(venta)
             db.session.commit()
+        id = 1
+        for registro in Producto.query.all():
+            registro.idProducto = id
+            db.session.commit()
+            id += 1
         return json.dumps({'listo':'usuario'})
 
 @app.route('/recuperarProductos', methods=['GET', 'POST', 'OPTIONS'])
