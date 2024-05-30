@@ -16,6 +16,7 @@ import Registro from '../Registrarse/Registro';
 import Home from '../Home/Home';
 import BuscarProducto from '../BuscarProducto/BuscarProducto';
 import ModificarVentas from '../ModificarVentas/ModificarVentas';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
@@ -43,10 +44,11 @@ function App() {
       const usr = [data['modo'], data['nombre'], data['correo'], data['contrasenia']]
       setUser(usr);  
       console.log(data['modo']);
+      Cookies.set('user', user);
       if(data['modo'] === 'Vendedor'){
         navigate('/vendedor');      
       } else if(data['modo'] === 'Comprador'){
-        navigate('/comprador');      
+        navigate('/comprador');    
       }
     }     
   };
@@ -71,7 +73,7 @@ function App() {
 
   useEffect(() => {            
     if (location.pathname === '/') {            
-      Cookies.set('user', user);
+      // Cookies.set('user', user);
       var almacenadoUser = Cookies.get('user');
       if (almacenadoUser) {
         //setUser(almacenadoUser);
@@ -143,7 +145,7 @@ function App() {
       <div className='container'>
         <div>
           <span className="logo-log">
-            <img src={logo} alt="MerkApp's logo"/>
+            <a href='/'> <img src={logo} alt="MerkApp's logo"/></a>
             <h1>MerkApp</h1>            
               <Routes>
                 <Route path="/" element={Home()} />  
@@ -155,7 +157,7 @@ function App() {
                 <Route path="/comprador/buscar" element={BuscarProducto(user)} />
                 <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  
                 <Route path='/ola' element={MiPaginaProtegida()} />
-                <Route path='/register' element={Registro()} />
+                <Route path='/register' element={<RequireAuth> <Registro /> </RequireAuth>} />
               </Routes>            
           </span>
         </div>
