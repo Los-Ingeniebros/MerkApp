@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 function Logout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    Cookies.remove('user');
+    Cookies.remove("user");
     // Redirige al inicio de sesión
-    navigate('/login');
+    navigate("/login");
   }, [navigate]);
 
   return null;
