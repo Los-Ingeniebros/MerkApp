@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './EncontrarProducto';
 
 const BuscarProducto = ({ onSearch }) => {
   const [query, setQuery] = useState('');
@@ -21,7 +22,7 @@ const BuscarProducto = ({ onSearch }) => {
         value={query}
         onChange={handleChange}
       />
-      <button type="submit">Buscar</button>
+      <button className="boton-animado" type="submit">Buscar</button>
     </form>
   );
 };
