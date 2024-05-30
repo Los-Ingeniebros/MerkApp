@@ -5,24 +5,22 @@ from flask import Flask, redirect, render_template, url_for, request, flash, ses
 class Vendedor(db.Model):
 
     __tablename__ = 'vendedor'
-    idVendedor = Column(Integer, nullable=False, primary_key=True)
+    idVendedor = Column(Integer, nullable=False, primary_key=True, autoincrement=True)
     nombre = Column(String(200), nullable=False)
     apellidoPat = Column(String(200), nullable=False)
     apellidoMat = Column(String(200))
     contrasenia = Column(String(64), nullable=False)
-    correo = Column(String(500), default=None, primary_key=True)
-    telefono = Column(String(10), nullable=False, primary_key=True) 
-    fotoDePerfil = Column(BLOB)           
+    correo = Column(String(500), default=None)
+    telefono = Column(String(10), nullable=False) 
+    fotoDePerfil = Column(BLOB, nullable=True)         
 
-    def __init__(self, idVendedor, nombre, apellidoPat, apellidoMat, contrasenia, telefono, correo, fotoDePerfil):
-        self.idVendedor = idVendedor
+    def __init__(self, nombre, apellidoPat, apellidoMat, contrasenia, telefono, correo):
         self.nombre = nombre
         self.apellidoPat = apellidoPat
         self.apellidoMat = apellidoMat
         self.contrasenia = contrasenia
         self.correo = correo
-        self.telefono = telefono        
-        self.fotoDePerfil = fotoDePerfil
+        self.telefono = telefono    
 
     #Sugerencia, después poner las funciones en los modelos de tal manera que en app.py no tengamos eso y solo lo mandemos a llamar
 

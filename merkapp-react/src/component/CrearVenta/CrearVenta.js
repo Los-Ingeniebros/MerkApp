@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import logo from '../../imagenes/MerkAppSinFondo.png';
 
-function CrearVenta (user, categorias) {
+function CrearVenta (user, categorias) {    
     const navigate = useNavigate();
 
     const [enteredNombre, setNombre] = useState('');
@@ -60,7 +60,7 @@ function CrearVenta (user, categorias) {
         setStock('');
         // setFotografia('');
         setVenta('');
-    };
+    };    
 
     return (
         <form onSubmit={submitHandler}>
@@ -86,14 +86,14 @@ function CrearVenta (user, categorias) {
             <div>
                 <label>Categoría:
                     <p>
-                        {Object.entries(categorias).map(([key, value]) => (
+                        {categorias && Object.entries(categorias).map(([key, value]) => (
                             <label>
                                 <input
                                 type="radio"
                                 name="myRadio"
                                 value={key}
                                 onChange={() => categoriaChangeHandler(key)} required/>
-                                {value}
+                                {value}                                
                             </label>
                         ))}
                     </p>

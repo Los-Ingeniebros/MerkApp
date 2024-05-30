@@ -17,12 +17,18 @@ import RequireAuth from '../Prueba/WihAuth';
 import MiPaginaProtegida from '../Prueba/P1';
 import Registro from '../Registrarse/Registro';
 import Home from '../Home/Home';
+//import ModificarVentas from '../ModificarVentas/ModificarVentas';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Modificar from '../ModificarVenta/ModificarVenta';
 import Listar from '../ModificarVenta/ListarVentas';
+import ConsultarProductos from '../ConsultarProductos/ConsultarProductos';
+import Producto from '../Producto/Producto';
+
 
 function App() {
   const [user, setUser] = useState('');
-  const [users, setUsers] = useState('');
+  const [ventas, setVentas] = useState('');
+  const [productos, setProductos] = useState('');  
   const [categorias, setCategorias] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,16 +52,17 @@ function App() {
       const usr = [data['modo'], data['nombre'], data['correo'], data['contrasenia']]
       setUser(usr);
       console.log(data['modo']);
+      Cookies.set('user', user);
       if(data['modo'] === 'Vendedor'){
         navigate('/vendedor');
       } else if(data['modo'] === 'Comprador'){
-        navigate('/comprador');
+        navigate('/comprador');    
       }
     }
   };
 
-  async function recuperar () {
-    const response = await fetch('http://127.0.0.1:5000/recuperar', {
+  async function recuperarVentas () {
+    const response = await fetch('http://127.0.0.1:5000/recuperarVentas', {
       method:'POST',
       body: JSON.stringify(user),
       headers: {
@@ -64,12 +71,7 @@ function App() {
     });
     const data = await response.json();
     console.log(data);
-    //console.log(typeof data['dic']);
-    //console.log(data['dic']);
-    //const usuarios = JSON.parse(data['lista']);
-    //console.log(usuarios);
-    //setUsers(usuarios);
-    setUsers(data['dic']);
+    setVentas(data['dic']);
   };
 
   async function recuperarCategorias () {
@@ -82,17 +84,20 @@ function App() {
     });
     const data = await response.json();
     console.log(data);
-    //console.log(typeof data['dic']);
-    //console.log(data['dic']);
-    //const usuarios = JSON.parse(data['lista']);
-    //console.log(usuarios);
-    //setUsers(usuarios);
+    setCategorias(data['cat']);    
+  };
+  
+  async function recuperarProductos () {
+    const response = await fetch('http://127.0.0.1:5000/recuperarProductos');      
+    const data = await response.json();    
+    console.log(data);  
+    setProductos(data['dic']);    
     setCategorias(data['cat']);
   };
 
-  useEffect(() => {
-    if (location.pathname === '/') {
-      Cookies.set('user', user);
+  useEffect(() => {            
+    if (location.pathname === '/') {            
+      // Cookies.set('user', user);
       var almacenadoUser = Cookies.get('user');
       if (almacenadoUser) {
         //setUser(almacenadoUser);
@@ -141,17 +146,46 @@ function App() {
     } else if (location.pathname === '/login') {
       Cookies.remove('user');
     } else if (location.pathname === '/vendedor/eliminar') {
-      recuperar();
+      almacenadoUser = Cookies.get('user');
+      if (almacenadoUser) {
+        almacenadoUser = almacenadoUser.split(",");
+        setUser(almacenadoUser);
+        console.log('Nombre de usuario recuperado:', almacenadoUser);
+        if (almacenadoUser[0] === 'Comprador'){
+          navigate('/comprador');
+        }
+      } else {
+        Cookies.set('user', user);
+        console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+      }
+      recuperarVentas();      
+    } else if (location.pathname === '/comprador/consultar') {      
+      recuperarProductos();      
     } else if (location.pathname === '/vendedor/crear') {
+      almacenadoUser = Cookies.get('user');
+      if (almacenadoUser) {
+        almacenadoUser = almacenadoUser.split(",");
+        setUser(almacenadoUser);
+        console.log('Nombre de usuario recuperado:', almacenadoUser);
+        if (almacenadoUser[0] === 'Comprador'){
+          navigate('/comprador');
+        }
+      } else {
+        Cookies.set('user', user);
+        console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+      }
       recuperarCategorias();
     } else if (location.pathname === '/vendedor/modificar/:idProducto') {
       recuperarCategorias();
     } else if (location.pathname === '/vendedor/ventas') {
-      recuperarCategorias();
-      recuperar();
+      recuperarCategorias();     
+      recuperarVentas(); 
     }
   }, [location.pathname]);
 
+  //<header className="App-header" id="app-header">
+  //<Routes>
+  
   return (
   <div className='login'>
     <div className="area" >
@@ -169,22 +203,28 @@ function App() {
         <li></li>
       </ul>
       <div className='container'>
-          <header className="App-header" id="app-header">
+        <div>
+          <span className="logo-log">                        
+            <header className="App-header" id="app-header">
               <Routes>
                 <Route path="/" element={Home()} />
                 <Route path="/vendedor" element={HomeVendedor(user)} />
                 <Route path="/comprador" element={HomeComprador(user)} />
-                <Route path="/vendedor/crear" element={Crear(user, categorias)} />
-                <Route path="/vendedor/eliminar" element={Eliminar(users)} />
-                <Route path="/vendedor/ventas" element={Listar (users) } />
-                <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />
-                <Route path="/comprador/agregar" element={AgregarOpinion(user)} />  
+                <Route path="/vendedor/crear" element={Crear(user, categorias)} /> 
+                <Route path="/vendedor/eliminar" element={Eliminar(ventas)} />  
+                <Route path="/comprador/consultar" element={ConsultarProductos(productos)} />
+                <Route path="/comprador/producto/:key" element={<Producto />} />                
+                <Route path="/comprador/calificacion/:key" element={<AgregarOpinion user = {user}/>} />                                                 
+                <Route path="/vendedor/ventas" element={Listar (ventas) } />
+                <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />                                 
                 <Route path="/comprador/buscar" element={<EncontrarProducto />} />
                 <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  
                 <Route path='/ola' element={MiPaginaProtegida()} />
-                <Route path='/register' element={Registro()} />
-              </Routes>
-          </header>
+                <Route path='/register' element={<RequireAuth> <Registro /> </RequireAuth>} />
+              </Routes>                                    
+              </header>             
+          </span>
+        </div>
       </div>
     </div >
   </div>
