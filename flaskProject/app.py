@@ -7,15 +7,14 @@ from alchemyClasses.Vendedor import Vendedor
 from alchemyClasses.Producto import Producto
 from alchemyClasses.Comprar import Comprar
 from alchemyClasses.Categoria import Categoria
-from hashlib import sha256
-import smtplib
-from email.message import EmailMessage
 from sqlalchemy.orm import aliased
 import json
 
 app = Flask(__name__)
+app.register_blueprint(catalogue)
 app.config['SECRET_KEY'] = 'dev'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ing:Developer123!@localhost:3306/base_merkaap'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://lab:Developer123!@localhost:3306/base_merkaap'
 db.init_app(app)
 CORS(app)
 
@@ -39,9 +38,9 @@ def login():
         return redirect(url_for('usuario.registrar_usuario'))
     if request.method == 'POST':
         correo = request.json['correo']
-        contrasenia = sha256((request.json['contrasenia']).encode('utf-8')).hexdigest()    
+        contrasenia = request.json['contrasenia']
         modo = request.json['modo']
-        
+
         if modo == 'Vendedor':
             encontrado = Vendedor.query.filter(Vendedor.correo == correo, Vendedor.contrasenia == contrasenia).first()
         elif modo == 'Comprador':
@@ -51,7 +50,7 @@ def login():
             return json.dumps({'error':'Invalid username or password'})
         
         if encontrado:
-            # session['user_id'] = correo
+            session['user_id'] = correo
             return json.dumps({'nombre': encontrado.nombre, 'correo': encontrado.correo, 'contrasenia': encontrado.contrasenia, 'modo': modo})
         flash('Invalid username or password')
         return json.dumps({'error':'Invalid username or password'})
@@ -250,60 +249,6 @@ def obtener_categorias():
 def logout():
     session.clear()
     return redirect(url_for('login'))
-
-@app.route('/register',  methods=['GET', 'POST'])
-def register():
-    if session.get('user') == None:
-        print("Pendientes")
-        print(session.get('user'))
-        # return render_template('login.html', user=session['user'])   
-    if request.method == 'GET':        
-        return render_template('index.html')
-    if request.method == 'POST':
-        nombre = request.json['nombre']
-        apellido = request.json['apellido']
-        rol = request.json['rol']
-        numero = request.json['numero']
-        correo = request.json['correo']
-        contrasenia = request.json['contrasenia']
-        contra = sha256(contrasenia.encode('utf-8')).hexdigest()
-        print("asulito")
-
-        if(rol == 'Vendedor'):
-            correo1 = Vendedor.query.filter_by(correo=correo).first()
-            if correo1:
-                return json.dumps({'error':'correo repetido'})
-                # return json.dumps({'listo':nombre, 'correo':correo}) sha256(cipher("Developer123#")).hexdigest())  
-            nuevo_usuario = Vendedor(nombre,apellido,"",contra,numero,correo)
-        else:
-            correo1 = Comprador.query.filter_by(correo=correo).first()
-            if correo1:
-                return json.dumps({'error':'correo repetido'})
-            nuevo_usuario = Comprador(nombre,apellido,"",contra,numero,correo)
-        
-        # Información del correo
-        correo_merkapp = "merkapp.online@gmail.com"
-        # Debería ser una contraseña de aplicación o una contraseña segura
-        contra_merkapp = "edlu ylzl vbrw ugzf"  
-
-        msg = EmailMessage()
-        msg["Subject"] = "Datos de la cuenta de MerkApp"
-        msg["From"] = correo_merkapp
-        msg["To"] = correo
-        msg.set_content(f"Hola, {nombre}, te damos la bienvenida a nuestro sistema web.\n\nEl registro de tu cuenta de accesso fue exitoso.\n\nTu contraseña es {contrasenia}\n\nSaludos :D")
-
-        try:
-            # Usar SMTP_SSL si el puerto es 465
-            with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
-                smtp.login(correo_merkapp, contra_merkapp)
-                print(f"Enviando correo a {correo}")
-                smtp.send_message(msg)
-                print(f"Correo enviado a {correo}")
-        except smtplib.SMTPException as e:
-            print(f"Error al enviar el correo a {correo}: {e}")
-        db.session.add(nuevo_usuario)
-        db.session.commit()
-        return json.dumps({'listo':nombre, 'correo':correo})
 
 if __name__ == '__main__':
     app.run()

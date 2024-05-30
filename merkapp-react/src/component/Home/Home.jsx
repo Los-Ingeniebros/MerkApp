@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  console.log("!respondable")
     const navigate = useNavigate();
   return <> 
   <div className="logo-log">Bienvenid@ a nuestro sistema</div>

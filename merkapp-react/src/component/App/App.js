@@ -17,8 +17,6 @@ import RequireAuth from '../Prueba/WihAuth';
 import MiPaginaProtegida from '../Prueba/P1';
 import Registro from '../Registrarse/Registro';
 import Home from '../Home/Home';
-//import ModificarVentas from '../ModificarVentas/ModificarVentas';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Modificar from '../ModificarVenta/ModificarVenta';
 import Listar from '../ModificarVenta/ListarVentas';
 import ConsultarProductos from '../ConsultarProductos/ConsultarProductos';
@@ -52,11 +50,10 @@ function App() {
       const usr = [data['modo'], data['nombre'], data['correo'], data['contrasenia']]
       setUser(usr);
       console.log(data['modo']);
-      Cookies.set('user', user);
       if(data['modo'] === 'Vendedor'){
         navigate('/vendedor');
       } else if(data['modo'] === 'Comprador'){
-        navigate('/comprador');    
+        navigate('/comprador');
       }
     }
   };
@@ -95,9 +92,9 @@ function App() {
     setCategorias(data['cat']);
   };
 
-  useEffect(() => {            
-    if (location.pathname === '/') {            
-      // Cookies.set('user', user);
+  useEffect(() => {
+    if (location.pathname === '/') {
+      Cookies.set('user', user);
       var almacenadoUser = Cookies.get('user');
       if (almacenadoUser) {
         //setUser(almacenadoUser);
@@ -159,9 +156,6 @@ function App() {
     }
   }, [location.pathname]);
 
-  //<header className="App-header" id="app-header">
-  //<Routes>
-  
   return (
   <div className='login'>
     <div className="area" >
@@ -179,10 +173,7 @@ function App() {
         <li></li>
       </ul>
       <div className='container'>
-        <div>
-          <span className="logo-log">
-            <a href='/'> <img src={logo} alt="MerkApp's logo"/></a>
-            <h1>MerkApp</h1>         
+          <header className="App-header" id="app-header">
               <Routes>
                 <Route path="/" element={Home()} />
                 <Route path="/vendedor" element={HomeVendedor(user)} />
@@ -197,10 +188,9 @@ function App() {
                 <Route path="/comprador/buscar" element={<EncontrarProducto />} />
                 <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  
                 <Route path='/ola' element={MiPaginaProtegida()} />
-                <Route path='/register' element={<RequireAuth> <Registro /> </RequireAuth>} />
-              </Routes>                          
-          </span>
-        </div>
+                <Route path='/register' element={Registro()} />
+              </Routes>
+          </header>
       </div>
     </div >
   </div>
