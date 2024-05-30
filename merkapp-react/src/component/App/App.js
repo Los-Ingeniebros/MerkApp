@@ -165,7 +165,6 @@ function App() {
   //<Routes>
   
   return (
-
     <div>
       <div>
         <ul className="circles">
@@ -185,7 +184,6 @@ function App() {
           <div>
             <span className="logo-log">
               <a href="/">
-                {" "}
                 <img src={logo} alt="MerkApp's logo" />
               </a>
               <h1>MerkApp</h1>
@@ -206,6 +204,7 @@ function App() {
                 <Route path='/register' element={<RequireAuth> <Registro /> </RequireAuth>} />
               </Routes>                          
           </span>
+          </div>
         </div>
       </div>
     </div>
