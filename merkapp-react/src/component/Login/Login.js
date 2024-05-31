@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import './Login.css';
-
-import logo from '../../imagenes/MerkAppSinFondo.png';
+import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
+import './Login.css';
 
 // import scrpt from './script.js';
 
@@ -10,9 +9,46 @@ function LogInForm (props) {
     const [enteredCorreo, setCorreo] = useState('');
     const [enteredContrasenia, setContrasenia] = useState('');
     const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
+    const [user, setUser] = useState('');
     const opciones = ["Vendedor", "Comprador"];
     const navigate = useNavigate();
 
+    async function ingresar (name) {
+        console.log(name);
+        const response = await fetch('http://127.0.0.1:5000/login', {
+          method:'POST',
+          body: JSON.stringify(name),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            console.error(`Error al obtener los datos: ${response.status}`);
+    
+            if (response.status === 500) {
+              alert("Error del servidor");
+            } else {
+              alert("Error!" + response.status);
+            }
+        }
+        console.log(data);
+        if (data.error !== undefined) {
+          alert("ERROR! " + data.error);
+        } else {
+          alert("Usuario encontrado!");
+          console.log(data['nombre'])
+          const usr = [data['modo'], data['nombre'], data['correo'], data['contrasenia']]
+          setUser(usr);
+          console.log(data['modo']);
+          Cookies.set('user', usr);
+          if(data['modo'] === 'Vendedor'){
+            navigate('/vendedor');
+          } else if(data['modo'] === 'Comprador'){
+            navigate('/comprador');    
+          }
+        }
+    };
 
     const correoChangeHandler = (event) => {
         setCorreo(event.target.value);
@@ -30,7 +66,9 @@ function LogInForm (props) {
             contrasenia:enteredContrasenia,
             modo:opcionSeleccionada
         }
-        props.onSaveName(user);
+        // props.onSaveName(user);
+        ingresar(user)
+        console.log("música " + user);
         setCorreo('');
         setContrasenia('');
         setOpcionSeleccionada('');
@@ -38,8 +76,6 @@ function LogInForm (props) {
     return (
         // <div className="area">
             <div className="logo-log">
-                <img src={logo} alt="MerkApp's logo"/>
-                <h1>MerkApp</h1>
                 <div className="wrapper fadeInDown">
                     <div className="container">
                         <div className="form">
@@ -55,6 +91,7 @@ function LogInForm (props) {
                                         type='email'
                                         value={enteredCorreo}
                                         onChange={correoChangeHandler}
+                                        required
                                     />
                                 </div>
                                 <div>
@@ -65,6 +102,7 @@ function LogInForm (props) {
                                         type='password'
                                         value={enteredContrasenia}
                                         onChange={contraseniaChangeHandler}
+                                        required
                                     />
                                 </div>
                                 <ul style={{ listStyle: 'none', padding: 0 }}>

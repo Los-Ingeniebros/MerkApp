@@ -11,7 +11,7 @@ function HomeVendedor(name){
     const submitHandler = (event) => {
         Cookies.remove('user');
         navigate('/login');
-        Cookies.remove('user');
+        // Cookies.remove('user');
     }
 
     function crear () {
@@ -31,10 +31,6 @@ function HomeVendedor(name){
         
         <form onSubmit={submitHandler}>
             <div>
-                <div className="logopequeno">
-                    <img src={logo} alt="MerkApp's logo"/>
-                    Merkapp
-                </div>
                 <br></br>
                 <br></br>
                 <br></br>
