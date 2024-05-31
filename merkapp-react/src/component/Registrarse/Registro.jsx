@@ -29,7 +29,7 @@ function Registro() {
       if (!response.ok) {
         console.error(`Error al obtener los datos: ${response.status}`);
 
-        if (response.status == 500) {
+        if (response.status === 500) {
           alert("Error del servidor");
         } else {
           alert("Error!" + response.status);
