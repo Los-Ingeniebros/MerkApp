@@ -15,7 +15,7 @@ import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dev'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ferfong:Develooper123!@localhost:3306/base_merkaap'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://lab:Developer123!@localhost:3306/base_merkaap'
 db.init_app(app)
 CORS(app)
 
@@ -228,18 +228,17 @@ def agregarOpinion():
 @app.route('/buscar', methods=['GET'])
 def buscar_productos():
     query = request.args.get('query', '')
-    categoria_nombre = request.args.get('categoria', '')
     if query.isdigit():
         productos = Producto.query.filter(
-            (Producto.idProducto == int(query)) |
-            (Producto.idCategoria == int(query))
+            (Producto.idProducto == int(query))
         ).all()
     else:
-        productos = Producto.query.join(Categoria, Producto.idCategoria == Categoria.idCategoria).filter(
+        categoria_alias = aliased(Categoria)
+        productos = Producto.query.join(categoria_alias, Producto.idCategoria == categoria_alias.idCategoria).filter(
             (Producto.nombre.like(f'%{query}%')) |
-            (Categoria.nombre.like(f'%{categoria_nombre}%') if categoria_nombre else True)
+            (categoria_alias.nombre.like(f'%{query}%'))
         ).all()
-
+    
     resultados = [
         {
             'idProducto': p.idProducto,
