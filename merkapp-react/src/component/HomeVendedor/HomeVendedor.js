@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+
 import './HomeVendedor.css';
 import { AuthContext, useAuth } from "../Auth/AuthContext";
+import logo from '../../imagenes/MerkAppSinFondo.png';
 
-function HomeVendedor(props){
+function HomeVendedor({name, eliminarCookie}){
+  
     const navigate = useNavigate();
     const {user, logout ,login } = useAuth();
     
     const submitHandler = (event) => {
+
         logout();
     }
 
@@ -21,12 +25,10 @@ function HomeVendedor(props){
     };
 
     function modificar () {
-        navigate('/vendedor/ventas');                
+        navigate('/vendedor/ventas');
     };
 
     return (
-        // <div className="fondoVendedor">
-        
         <form onSubmit={submitHandler}>
             <div>
                 <br></br>
@@ -34,7 +36,7 @@ function HomeVendedor(props){
                 <br></br>
                 <br></br>
                 <div>
-                    Hola {props.name[0]} {props.name[1]}
+                    Hola {name[0]} {name[1]}
                     <div className="logo-log">
                         <button className="boton-animado" onClick={() => crear()}>Crear venta</button>
                         <br></br>
@@ -47,8 +49,6 @@ function HomeVendedor(props){
                 </div>
             </div>
         </form>
-        
-        // </div>
     );
 };
 

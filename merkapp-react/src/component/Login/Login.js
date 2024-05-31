@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import './Login.css';
 import { useAuth } from "../Auth/AuthContext";
 
-// import scrpt from './script.js';
-
 function LogInForm (props) {
     const [enteredCorreo, setCorreo] = useState('');
     const [enteredContrasenia, setContrasenia] = useState('');
@@ -48,7 +46,7 @@ function LogInForm (props) {
           if(data['modo'] === 'Vendedor'){
             navigate('/vendedor');
           } else if(data['modo'] === 'Comprador'){
-            navigate('/comprador');    
+            navigate('/comprador');
           }
         }
     };
@@ -78,56 +76,54 @@ function LogInForm (props) {
         setOpcionSeleccionada('');
     }
     return (
-        // <div className="area">
-            <div className="logo-log">
-                <div className="wrapper fadeInDown">
-                    <div className="container">
-                        <div className="form">
-                            <span className="log">
-                                Inicio de sesión
-                            </span>
-                            <form onSubmit={submitHandler}>
-                                <div>
-                                    <label for="email">Correo electrónico: </label>
-                                    <input
-                                        id="email"
-                                        name="email"
-                                        type='email'
-                                        value={enteredCorreo}
-                                        onChange={correoChangeHandler}
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label for="password">Contraseña: </label>
-                                    <input
-                                        id="password"
-                                        name="password"
-                                        type='password'
-                                        value={enteredContrasenia}
-                                        onChange={contraseniaChangeHandler}
-                                        required
-                                    />
-                                </div>
-                                <ul style={{ listStyle: 'none', padding: 0 }}>
-                                    {opciones.map((opcion, indice) => (
-                                    <li key={indice} onClick={() => opcionChangeHandler(opcion)} style={{ cursor: 'pointer', border: opcion === opcionSeleccionada ? '2px solid blue' : 'none', padding: '5px', marginBottom: '5px', borderRadius: '5px'}}>
-                                        {opcion}
-                                    </li>
-                                    ))}
-                                </ul>
-                                <div>
-                                    <button type="submit" id="submit" className="boton-animado">Ingresar</button>
-                                </div>
-                            </form>
-                            <div className="boton">
-                                <button type="submit" className='boton-animado' onClick={() =>navigate('/register')} >¿No tiene cuenta? Registrarse</button>
+        <div className="logo-log">
+            <div className="wrapper fadeInDown">
+                <div className="container">
+                    <div className="form">
+                        <span className="log">
+                            Inicio de sesión
+                        </span>
+                        <form onSubmit={submitHandler}>
+                            <div>
+                                <label for="email">Correo electrónico: </label>
+                                <input
+                                    id="email"
+                                    name="email"
+                                    type='email'
+                                    value={enteredCorreo}
+                                    onChange={correoChangeHandler}
+                                    required
+                                />
                             </div>
+                            <div>
+                                <label for="password">Contraseña: </label>
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type='password'
+                                    value={enteredContrasenia}
+                                    onChange={contraseniaChangeHandler}
+                                    required
+                                />
+                            </div>
+                            <ul className="opciones" style={{ listStyle: 'none', padding: 0 }}>
+                                {opciones.map((opcion, indice) => (
+                                <li key={indice} onClick={() => opcionChangeHandler(opcion)} style={{ cursor: 'pointer', border: opcion === opcionSeleccionada ? '2px solid blue' : 'none', padding: '5px', marginBottom: '5px', borderRadius: '5px'}}>
+                                    {opcion}
+                                </li>
+                                ))}
+                            </ul>
+                            <div>
+                                <button type="submit" id="submit" className="boton-animado">Ingresar</button>
+                            </div>
+                        </form>
+                        <div className="boton">
+                            <button type="submit" className='boton-animado' onClick={() =>navigate('/register')} >¿No tiene cuenta? Registrarse</button>
                         </div>
                     </div>
                 </div>
             </div>
-        // </div>
+        </div>
     )
 }
 export default LogInForm;

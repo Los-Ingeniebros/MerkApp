@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-function EliminarVentas (lista) {
+function EliminarVentas (user, lista) {
     const navigate = useNavigate();
-    const [elementosSeleccionados, setElementosSeleccionados] = useState([]); 
+    const [elementosSeleccionados, setElementosSeleccionados] = useState([]);
 
     const elementosSeleccionadosHandler = (key) => {
         if (elementosSeleccionados.includes(key)) {
@@ -12,6 +12,10 @@ function EliminarVentas (lista) {
             setElementosSeleccionados([...elementosSeleccionados, key]);
         }
     };
+
+    function Regresar(){
+        navigate('/vendedor');
+    }
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -23,27 +27,27 @@ function EliminarVentas (lista) {
             }
         });
         console.log(response);
-        const data = await response.json();    
+        const data = await response.json();
         console.log(data);
         alert("Los productos se eliminaron correctamente");
         navigate('/vendedor');
         setElementosSeleccionados('');
     };
 
-    return ( 
+    return (
         <form onSubmit={submitHandler}>
             <div>
-            <h1>Cantidad de productos en venta: {lista && lista.length > 0 ? lista.length : 0}</h1>
-            {lista.length > 0 ? 'Selecciona los productos que quieres eliminar:' : ''}
+            <h2>Productos en venta: {lista && Object.entries(lista).length > 0 ? Object.entries(lista).length : 0}</h2>
+            {Object.entries(lista).length > 0 ? <h1>Selecciona los productos que quieres eliminar:</h1> : <h1>No tienes ningun producto en venta</h1>}
             <ul>
-                {lista && Object.entries(lista).map(([key, value]) => (                
+                {lista && Object.entries(lista).map(([key, value]) => (
                     <div>
-                        <input 
-                        type="checkbox" 
+                        <input
+                        type="checkbox"
                         id={key}
                         checked={elementosSeleccionados.includes(key)}
                         onChange={() => elementosSeleccionadosHandler(key)}/>
-                        <label> Identificador {key} : 
+                        <label> Identificador {key} :
                             <div> - Nombre = {value[0]}</div> 
                             <div> - Categoría = {value[1]}</div>
                             <div> - Precio = {value[2]}</div>
@@ -52,7 +56,7 @@ function EliminarVentas (lista) {
                     </div>
                 ))}
             </ul>
-            <button type="submit">Eliminar</button>
+            {elementosSeleccionados.length > 0 ? <button type="submit">Eliminar</button> : <button onClick={() => Regresar()}>Regresar</button>}
             
             </div>
         </form>

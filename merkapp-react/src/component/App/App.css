@@ -1,16 +1,17 @@
-.todo{
-    background-color: #0053d8;
+body {
+    margin: 0;
+    font-family: 'Allerta Stencil', Monaco, Arial, 'Roboto', 'Oxygen', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color:blueviolet;
 }
-.login {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: black;
-    background-color: #0053d8;
 
+code {
+    font-family: Monaco, Consolas, 'Courier New',
+    monospace;
 }
+
 .container {
     display: flex;
     flex-direction: column;
@@ -84,7 +85,6 @@ img {
 h1 {
     font-size: 2em;
     color: white;
-    /* font-family: cursive; */
 }
 
 .logo-log {
@@ -93,8 +93,8 @@ h1 {
 }
 
 .area {
-    background: #d800d8;
-    background: -webkit-linear-gradient(right, #00368c, #ab0000);
+    background: #007a95;
+    background: -webkit-linear-gradient(right, #00368c, #00932d);
     width: 100%;
     height:101vh;
 }
@@ -193,13 +193,13 @@ h1 {
 }
 
 @keyframes animate {
-    0%{
+    0% {
         transform: translateY(0) rotate(0deg);
         opacity: 1;
         border-radius: 0;
     }
 
-    100%{
+    100% {
         transform: translateY(-1000px) rotate(720deg);
         opacity: 0;
         border-radius: 50%;

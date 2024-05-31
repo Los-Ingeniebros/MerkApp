@@ -6,7 +6,7 @@ function AgregarOpinion (user) {
     const navigate = useNavigate();
     const [enteredCalificacion, setCalificacion] = useState('');
     const [enteredComentario, setComentario] = useState('');
-    const [opinion, setOpinion] = useState('');        
+    const [opinion, setOpinion] = useState('');
 
     const calificacionChangeHandler = (event) => {
         setCalificacion(event.target.value);
@@ -21,7 +21,7 @@ function AgregarOpinion (user) {
     };
 
     const submitHandler = async (event) => {
-        event.preventDefault();    
+        event.preventDefault();
         var lista = [user, opinion, key]
         const response = await fetch('http://127.0.0.1:5000/agregarOpinion', {
             method:'POST',
@@ -31,16 +31,19 @@ function AgregarOpinion (user) {
             }
         });
         console.log(response);
-        const data = await response.json();    
-        console.log(data);        
+        const data = await response.json();
+        console.log(data);
+        if (data[0] !== undefined && data[1] !== undefined){
+            alert("Opinión agregada exitosamente")
+        }
         navigate('/comprador');
         setOpinion('');
         setCalificacion('');
-        setComentario('');        
+        setComentario('');
     };
 
     return ( 
-        <form onSubmit={submitHandler}>  
+        <form onSubmit={submitHandler}>
             <div>
             <label>Calificación (0-10): </label>
                 <input 
@@ -62,7 +65,7 @@ function AgregarOpinion (user) {
                     value={enteredComentario}
                     onChange={comentarioChangeHandler}
                 />
-            </div>       
+            </div>
             <button type="submit" onClick={opinionChangeHandler}>Agregar</button>
         </form>
     );

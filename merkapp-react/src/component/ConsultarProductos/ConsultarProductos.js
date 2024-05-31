@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router-dom';
 
 function ConsultarProductos (lista) {
     const navigate = useNavigate();
-    const [elementoSeleccionado, setElementoSeleccionado] = useState(null); 
+    const [elementoSeleccionado, setElementoSeleccionado] = useState(null);
 
-    const elementoSeleccionadoHandler = (key) => {        
-        setElementoSeleccionado(key);     
+    const elementoSeleccionadoHandler = (key) => {
+        setElementoSeleccionado(key);
         navigate('/comprador/producto/'+key);
     };
     
-    return (         
+    return (
         <ul>
-            {lista && Object.entries(lista).map(([key, value]) => (                
-                <div key={key}>                        
+            {lista && Object.entries(lista).map(([key, value]) => (
+                <div key={key}>
                     <label
                         type="submit" 
                         onClick={() => elementoSeleccionadoHandler(key)}
@@ -26,7 +26,7 @@ function ConsultarProductos (lista) {
                     </label>
                 </div>
             ))}
-        </ul>            
+        </ul>
     );
 };
 
