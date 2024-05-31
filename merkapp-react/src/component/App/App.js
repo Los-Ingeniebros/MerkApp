@@ -239,12 +239,10 @@ function App() {
         <div className="container">
           <header className="App-header" id="app-header">
             <span className="logo-log">
-              <a onClick={() =>navigate('/')}>
+              {/* <a onClick={() =>navigate('/')}>
                 <img src={logo} alt="MerkApp's logo" />
-
-              </a>
-              <h1>MerkApp</h1>
-              
+                <h1>MerkApp</h1>
+              </a> */}
               <Routes>
                 <Route path="/" element={Home()} />
                 <Route path="/vendedor" element={<HomeVendedor name={user} eliminarCookie={eliminarCookie}/>} />

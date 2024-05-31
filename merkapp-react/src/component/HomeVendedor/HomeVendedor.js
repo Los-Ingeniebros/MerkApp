@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-import './HomeVendedor.css';
+// import './HomeVendedor.css';
 import { AuthContext, useAuth } from "../Auth/AuthContext";
 import logo from '../../imagenes/MerkAppSinFondo.png';
 
@@ -30,9 +30,8 @@ function HomeVendedor({name, eliminarCookie}){
 
     return (
         <form onSubmit={submitHandler}>
+            <img src={logo} alt="MerkApp's logo" />
             <div>
-                <br></br>
-                <br></br>
                 <br></br>
                 <br></br>
                 <div>
