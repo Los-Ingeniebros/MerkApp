@@ -85,7 +85,6 @@ img {
 h1 {
     font-size: 2em;
     color: white;
-    /* font-family: cursive; */
 }
 
 .logo-log {
@@ -194,13 +193,13 @@ h1 {
 }
 
 @keyframes animate {
-    0%{
+    0% {
         transform: translateY(0) rotate(0deg);
         opacity: 1;
         border-radius: 0;
     }
 
-    100%{
+    100% {
         transform: translateY(-1000px) rotate(720deg);
         opacity: 0;
         border-radius: 50%;

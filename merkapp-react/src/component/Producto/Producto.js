@@ -67,8 +67,8 @@ function Producto (user) {
             <div>
                 {Object.entries(producto).map(([key, value]) => (
                     <div>
-                        <label> Identificador {key} : 
-                            <div> - Nombre = {value[0]}</div> 
+                        <label> Identificador {key} :
+                            <div> - Nombre = {value[0]}</div>
                             <div> - Categoría = {value[1]}</div>
                             <div> - Precio = {value[2]}</div>
                             <div> - Inventario = {value[3]}</div>

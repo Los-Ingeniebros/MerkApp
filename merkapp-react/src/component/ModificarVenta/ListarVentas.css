@@ -21,19 +21,6 @@
   flex: 1;
 }
 
-.comprar-btn {
-  padding: 5px 10px; /* Smaller padding for smaller button */
-  font-size: 12px; /* Smaller font size for button */
-  background-color: #28a745;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.comprar-btn:hover {
-  background-color: #218838;
-}
-
 button {
   font-size: 2em;
   border: 0;

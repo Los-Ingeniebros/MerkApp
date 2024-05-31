@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ListarVentas (lista) {
     const navigate = useNavigate();
-    const [elementosSeleccionados, setElementosSeleccionados] = useState([]); 
+    const [elementosSeleccionados, setElementosSeleccionados] = useState([]);
 
     const elementosSeleccionadosHandler = (key) => {
         if (elementosSeleccionados.includes(key)) {
@@ -23,7 +23,7 @@ function ListarVentas (lista) {
             }
         });
         console.log(response);
-        const data = await response.json();    
+        const data = await response.json();
         console.log(data);
         navigate('/vendedor');
         setElementosSeleccionados('');
@@ -46,7 +46,7 @@ function ListarVentas (lista) {
                                 <p>Precio: {value[2]}</p>
                                 <p>Inventario: {value[3]}</p>
                             </div>
-                            <button className="comprar-btn" onClick={() => handleModificar(key)}>
+                            <button className="boton-animado" onClick={() => handleModificar(key)}>
                                 Modificar
                             </button>
                         </li>

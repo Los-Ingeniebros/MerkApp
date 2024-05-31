@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import './HomeVendedor.css';
 
 import logo from '../../imagenes/MerkAppSinFondo.png';
 
 function HomeVendedor({name, eliminarCookie}){
     const navigate = useNavigate();
 
-    const submitHandler = (event) => {     
-        eliminarCookie();   
-        navigate('/');        
+    const submitHandler = (event) => {
+        eliminarCookie();
+        navigate('/');
     }
 
     function crear () {
@@ -22,12 +21,10 @@ function HomeVendedor({name, eliminarCookie}){
     };
 
     function modificar () {
-        navigate('/vendedor/ventas');                
+        navigate('/vendedor/ventas');
     };
 
     return (
-        // <div className="fondoVendedor">
-        
         <form onSubmit={submitHandler}>
             <div>
                 <br></br>
@@ -48,8 +45,6 @@ function HomeVendedor({name, eliminarCookie}){
                 </div>
             </div>
         </form>
-        
-        // </div>
     );
 };
 
