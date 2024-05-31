@@ -117,8 +117,9 @@ function App() {
         }
       } else {
         console.log(
-          "No se encontró ningún nombre de usuario almacenado en los cookies."
+          "No se encontró ningún nombre de usuario almacenado en los cookies."          
         );
+        navigate('/login/0');
       }      
     } else if (location.pathname === '/login/0') {
       var almacenadoUser = Cookies.get("user");
@@ -134,7 +135,7 @@ function App() {
       } else {
         console.log(
           "No se encontró ningún nombre de usuario almacenado en los cookies."
-        );
+        );        
       }
     } else if (location.pathname === '/login/1') {
       eliminarCookie();
@@ -150,6 +151,7 @@ function App() {
         }
       } else {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+        navigate('/login/0');
       }
     } else if (location.pathname === '/comprador') {
       var almacenadoUser = Cookies.get('user');
@@ -162,6 +164,7 @@ function App() {
         }
       } else {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+        navigate('/login/0');
       }
     } else if (location.pathname === '/vendedor/eliminar') {
       var almacenadoUser = Cookies.get('user'); 
@@ -172,6 +175,7 @@ function App() {
         console.log('Nombre de usuario recuperado:', almacenadoUser);          
       } else {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+        navigate('/login/0');
       } 
       recuperarVentas(almacenadoUser);
     } else if (location.pathname === '/comprador/consultar') {      
@@ -184,6 +188,7 @@ function App() {
         console.log('Nombre de usuario recuperado:', almacenadoUser);        
       } else {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+        navigate('/login/0');
       }
       recuperarCategorias(almacenadoUser);
     } else if (location.pathname.startsWith('/vendedor/modificar/')) {
@@ -195,6 +200,7 @@ function App() {
         console.log('Nombre de usuario recuperado:', almacenadoUser);        
       } else {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+        navigate('/login/0');
       }
       recuperarCategorias(almacenadoUser);
     } else if (location.pathname === '/vendedor/ventas') {
@@ -205,6 +211,7 @@ function App() {
         console.log('Nombre de usuario recuperado:', almacenadoUser);        
       } else {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+        navigate('/login/0');
       }
       recuperarCategorias(almacenadoUser);     
       recuperarVentas(almacenadoUser);       
