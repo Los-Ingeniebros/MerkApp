@@ -32,35 +32,7 @@ function App() {
   const [categorias, setCategorias] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-
-  async function ingresar (name) {
-    console.log(name);
-    const response = await fetch('http://127.0.0.1:5000/login', {
-      method:'POST',
-      body: JSON.stringify(name),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    if (data.error !== undefined) {
-      alert("ERROR! " + data.error);
-    } else {
-      alert("Usuario encontrado!");
-      console.log(data['nombre'])
-      const usr = [data['modo'], data['nombre'], data['correo'], data['contrasenia']]
-      setUser(usr);
-      console.log(data['modo']);
-      Cookies.set('user', user);
-      if(data['modo'] === 'Vendedor'){
-        navigate('/vendedor');
-      } else if(data['modo'] === 'Comprador'){
-        navigate('/comprador');    
-      }
-    }
-  };
-
+  
   async function recuperarVentas () {
     const response = await fetch('http://127.0.0.1:5000/recuperarVentas', {
       method:'POST',
@@ -98,11 +70,13 @@ function App() {
   useEffect(() => {
     if (location.pathname === "/") {
       // Cookies.set('user', user);
+      console.log("derepente" + user)
       var almacenadoUser = Cookies.get("user");
+      console.log("derepente1"+ " depende " + user)
       if (almacenadoUser) {
-        //setUser(almacenadoUser);
+        setUser(almacenadoUser);
         almacenadoUser = almacenadoUser.split(",");
-        console.log("Nombre de usuario recuperado:", almacenadoUser);
+        console.log("Nombre de usuario recuperado:-------", almacenadoUser);
         //Cookies.remove('user');
         if (almacenadoUser[0] === "Vendedor") {
           navigate("/vendedor");
@@ -115,6 +89,8 @@ function App() {
         );
       }
       //navigate('/home');
+      console.log("Recuperado? "+ user)
+
     } else if (location.pathname === '/vendedor') {
       almacenadoUser = Cookies.get('user');
       if (almacenadoUser) {
@@ -125,11 +101,12 @@ function App() {
           navigate('/comprador');
         }
       } else {
-        Cookies.set('user', user);
+        // Cookies.set('user', user);
         //Cookies.remove('user');
         //navigate('/');
-        console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+        console.log('No se encontró ningún nombre de usuario almacenado en los cookies.-----');
       }
+      console.log("Recuperado? "+ user)
     } else if (location.pathname === '/comprador') {
       almacenadoUser = Cookies.get('user');
       if (almacenadoUser) {
@@ -140,13 +117,13 @@ function App() {
           navigate('/vendedor');
         }
       } else {
-        Cookies.set('user', user);
+        // Cookies.set('user', user);
         //Cookies.remove('user');
         //navigate('/');
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
       }
     } else if (location.pathname === '/login') {
-      Cookies.remove('user');
+      // Cookies.remove('user');
     } else if (location.pathname === '/vendedor/eliminar') {
       recuperarVentas();      
     } else if (location.pathname === '/comprador/consultar') {      
@@ -199,7 +176,7 @@ function App() {
                 <Route path="/vendedor/ventas" element={Listar (ventas) } />
                 <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />                                 
                 <Route path="/comprador/buscar" element={<EncontrarProducto />} />
-                <Route path="/login" element={<RequireAuth><LogInForm onSaveName={ingresar}/></RequireAuth>} />  
+                <Route path="/login" element={<RequireAuth><LogInForm/></RequireAuth>} />  
                 <Route path='/ola' element={MiPaginaProtegida()} />
                 <Route path='/register' element={<RequireAuth> <Registro /> </RequireAuth>} />
               </Routes>                          

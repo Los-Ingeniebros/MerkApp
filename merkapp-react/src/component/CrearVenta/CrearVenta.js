@@ -64,10 +64,6 @@ function CrearVenta (user, categorias) {
 
     return (
         <form onSubmit={submitHandler}>
-            <div className="logopequeno">
-                    <img src={logo} alt="MerkApp's logo"/>
-                    Merkapp
-                </div>
                 <br></br>
                 <br></br>
                 <br></br>

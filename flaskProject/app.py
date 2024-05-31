@@ -15,7 +15,7 @@ import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dev'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ing:Developer123!@localhost:3306/base_merkaap'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ferfong:Develooper123!@localhost:3306/base_merkaap'
 db.init_app(app)
 CORS(app)
 

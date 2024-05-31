@@ -26,10 +26,6 @@ function HomeComprador(name){
         // <div className="fondoComprador">
             <form onSubmit={submitHandler}>
                 <div>
-                    <div className="logopequeno">
-                        <img src={logo} alt="MerkApp's logo"/>
-                        Merkapp
-                    </div>
                     <br></br>
                     <br></br>
                     <br></br>
