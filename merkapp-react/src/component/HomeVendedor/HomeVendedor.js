@@ -30,10 +30,6 @@ function HomeVendedor({name, eliminarCookie}){
         
         <form onSubmit={submitHandler}>
             <div>
-                <div className="logopequeno">
-                    <img src={logo} alt="MerkApp's logo"/>
-                    Merkapp
-                </div>
                 <br></br>
                 <br></br>
                 <br></br>

@@ -150,6 +150,7 @@ function App() {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
         navigate('/');
       }
+      console.log("Recuperado? "+ user)
     } else if (location.pathname === '/comprador') {
       var almacenadoUser = Cookies.get('user');
       if (almacenadoUser) {
@@ -247,8 +248,7 @@ function App() {
         <div className="container">
           <div>
             <span className="logo-log">
-            <a href="/">
-                {" "}
+              <a href="/">
                 <img src={logo} alt="MerkApp's logo" />
             </a>            
               <Routes>

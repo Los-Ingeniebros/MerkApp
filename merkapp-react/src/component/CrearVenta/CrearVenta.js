@@ -53,6 +53,8 @@ function CrearVenta (user, categorias) {
         const data = await response.json();
         console.log(data);
         
+        alert("Producto modificado con éxito");
+        
         navigate('/vendedor');
         setNombre('');
         setDescripcion('');
@@ -64,10 +66,6 @@ function CrearVenta (user, categorias) {
 
     return (
         <form onSubmit={submitHandler}>
-            <div className="logopequeno">
-                    <img src={logo} alt="MerkApp's logo"/>
-                    Merkapp
-                </div>
                 <br></br>
                 <br></br>
                 <br></br>
