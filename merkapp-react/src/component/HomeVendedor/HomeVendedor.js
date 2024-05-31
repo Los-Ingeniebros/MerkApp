@@ -5,13 +5,12 @@ import './HomeVendedor.css';
 
 import logo from '../../imagenes/MerkAppSinFondo.png';
 
-function HomeVendedor(name){
+function HomeVendedor({name, eliminarCookie}){
     const navigate = useNavigate();
 
-    const submitHandler = (event) => {
-        Cookies.remove('user');
-        navigate('/login');
-        // Cookies.remove('user');
+    const submitHandler = (event) => {     
+        eliminarCookie();   
+        navigate('/');        
     }
 
     function crear () {

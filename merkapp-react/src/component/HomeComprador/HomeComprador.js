@@ -5,13 +5,12 @@ import './HomeComprador.css';
 
 import logo from '../../imagenes/MerkAppSinFondo.png';
 
-function HomeComprador(name){
+function HomeComprador({name, eliminarCookie}){
     const navigate = useNavigate();
 
-    const submitHandler = (event) => {
-        Cookies.remove('user');
-        navigate('/login');
-        Cookies.remove('user');
+    const submitHandler = (event) => {        
+        eliminarCookie();
+        navigate('/');
     }     
 
     function consultar () {

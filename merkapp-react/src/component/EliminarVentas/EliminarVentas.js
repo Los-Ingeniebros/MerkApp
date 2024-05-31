@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-function EliminarVentas (lista) {
+function EliminarVentas (user, lista) {
     const navigate = useNavigate();
     const [elementosSeleccionados, setElementosSeleccionados] = useState([]); 
 
@@ -12,6 +12,10 @@ function EliminarVentas (lista) {
             setElementosSeleccionados([...elementosSeleccionados, key]);
         }
     };
+
+    function Regresar(){
+        navigate('/vendedor');
+    }
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -33,8 +37,8 @@ function EliminarVentas (lista) {
     return ( 
         <form onSubmit={submitHandler}>
             <div>
-            <h1>Cantidad de productos en venta: {lista && lista.length > 0 ? lista.length : 0}</h1>
-            {lista.length > 0 ? 'Selecciona los productos que quieres eliminar:' : ''}
+            <h2>Productos en venta: {lista && Object.entries(lista).length > 0 ? Object.entries(lista).length : 0}</h2>
+            {Object.entries(lista).length > 0 ? <h1>Selecciona los productos que quieres eliminar:</h1> : <h1>No tienes ningun producto en venta</h1>}
             <ul>
                 {lista && Object.entries(lista).map(([key, value]) => (                
                     <div>
@@ -52,7 +56,7 @@ function EliminarVentas (lista) {
                     </div>
                 ))}
             </ul>
-            <button type="submit">Eliminar</button>
+            {elementosSeleccionados.length > 0 ? <button type="submit">Eliminar</button> : <button onClick={() => Regresar()}>Regresar</button>}            
             
             </div>
         </form>
