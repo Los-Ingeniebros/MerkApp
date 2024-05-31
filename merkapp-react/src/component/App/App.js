@@ -168,7 +168,8 @@ function App() {
   
   return (
     <>
-    <AuthProvider><NavBar></NavBar></AuthProvider>
+    {/* <AuthProvider><NavBar></NavBar></AuthProvider> */}
+    <NavBar></NavBar>
     <div>  
       <div>
         <ul className="circles">
