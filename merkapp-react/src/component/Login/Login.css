@@ -108,6 +108,11 @@ h1 {
   margin-bottom: 40px;
 }
 
+.opciones {
+  display: block;
+  color: white;
+}
+
 label {
   color:  white;
   display: block;

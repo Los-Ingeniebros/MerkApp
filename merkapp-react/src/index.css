@@ -1,17 +1,3 @@
-body {
-    margin: 0;
-    font-family: 'Allerta Stencil', Monaco, Arial, 'Roboto', 'Oxygen', 'Helvetica Neue',
-    sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color:blueviolet;
-}
-
-code {
-    font-family: Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 /* Lo quitado de app.css */
 ::selection {
     background: #d2acd2;
