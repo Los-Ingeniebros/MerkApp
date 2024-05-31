@@ -3,8 +3,6 @@ import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 import './Login.css';
 
-// import scrpt from './script.js';
-
 function LogInForm (props) {
     const [enteredCorreo, setCorreo] = useState('');
     const [enteredContrasenia, setContrasenia] = useState('');
@@ -105,7 +103,7 @@ function LogInForm (props) {
                                         required
                                     />
                                 </div>
-                                <ul style={{ listStyle: 'none', padding: 0 }}>
+                                <ul className="opciones" style={{ listStyle: 'none', padding: 0 }}>
                                     {opciones.map((opcion, indice) => (
                                     <li key={indice} onClick={() => opcionChangeHandler(opcion)} style={{ cursor: 'pointer', border: opcion === opcionSeleccionada ? '2px solid blue' : 'none', padding: '5px', marginBottom: '5px', borderRadius: '5px'}}>
                                         {opcion}

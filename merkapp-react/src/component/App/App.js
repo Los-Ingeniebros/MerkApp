@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation} from 'react-router
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 //import axios from "axios";
-import './App.css';
 import LogInForm from '../Login/Login';
 import HomeVendedor from '../HomeVendedor/HomeVendedor';
 import HomeComprador from '../HomeComprador/HomeComprador';
@@ -18,13 +17,14 @@ import MiPaginaProtegida from '../Prueba/P1';
 import Registro from '../Registrarse/Registro';
 import Home from '../Home/Home';
 //import ModificarVentas from '../ModificarVentas/ModificarVentas';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Modificar from '../ModificarVenta/ModificarVenta';
 import Listar from '../ModificarVenta/ListarVentas';
 import ConsultarProductos from '../ConsultarProductos/ConsultarProductos';
 import Producto from '../Producto/Producto';
 import { Navbar } from 'react-bootstrap';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 function App() {
   const [user, setUser] = useState('');
@@ -243,20 +243,20 @@ function App() {
     <div>
       <div>
         <ul className="circles">
+          <li>Javier</li>
           <li></li>
           <li></li>
+          <li>Jorge</li>
+          <li></li>
+          <li>Axel</li>
+          <li>Eduardo</li>
           <li></li>
           <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+          <li>Marcos</li>
           <li>Ola</li>
         </ul>
         <div className="container">
-          <div>
+          <header className="App-header" id="app-header">
             <span className="logo-log">
               <a href="/">
                 <img src={logo} alt="MerkApp's logo" />
@@ -274,10 +274,13 @@ function App() {
                 <Route path="/comprador/calificacion/:key" element={<AgregarOpinion user = {user}/>} />                                                 
                 <Route path="/vendedor/ventas" element={Listar (ventas) } />
                 <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />                                 
-                <Route path="/comprador/buscar" element={<EncontrarProducto />} />                                  
-              </Routes>                     
-          </span>
-          </div>
+                <Route path="/comprador/buscar" element={<EncontrarProducto />} />
+                <Route path="/login" element={<RequireAuth><LogInForm/></RequireAuth>} />  
+                <Route path='/ola' element={MiPaginaProtegida()} />
+                <Route path='/register' element={<RequireAuth> <Registro /> </RequireAuth>} />
+              </Routes>
+            </span>
+          </header>
         </div>
       </div>
     </div>
