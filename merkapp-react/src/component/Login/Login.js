@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 import './Login.css';
+import { useAuth } from "../Auth/AuthContext";
 
 function LogInForm (props) {
     const [enteredCorreo, setCorreo] = useState('');
     const [enteredContrasenia, setContrasenia] = useState('');
     const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
-    const [user, setUser] = useState('');
+    // const [user, setUser] = useState('');
     const opciones = ["Vendedor", "Comprador"];
     const navigate = useNavigate();
+
+    const {user, login, logout} = useAuth();
 
     async function ingresar (name) {
         console.log(name);
@@ -37,7 +40,7 @@ function LogInForm (props) {
           alert("Usuario encontrado!");
           console.log(data['nombre'])
           const usr = [data['modo'], data['nombre'], data['correo'], data['contrasenia']]
-          setUser(usr);
+        //   setUser(usr);
           console.log(data['modo']);
           Cookies.set('user', usr);
           if(data['modo'] === 'Vendedor'){
@@ -65,7 +68,8 @@ function LogInForm (props) {
             modo:opcionSeleccionada
         }
         // props.onSaveName(user);
-        ingresar(user)
+        // ingresar(user)
+        login(user)
         console.log("música " + user);
         setCorreo('');
         setContrasenia('');

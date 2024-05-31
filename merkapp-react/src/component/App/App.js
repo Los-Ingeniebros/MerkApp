@@ -21,13 +21,19 @@ import Modificar from '../ModificarVenta/ModificarVenta';
 import Listar from '../ModificarVenta/ListarVentas';
 import ConsultarProductos from '../ConsultarProductos/ConsultarProductos';
 import Producto from '../Producto/Producto';
-import { Navbar } from 'react-bootstrap';
 
+import NavBar from '../NavBar/NavBar';
+import AuthProvider from '../Auth/Auth';
+// import AuthProvider from '../Auth/Auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+
 function App() {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(() => {
+    const valorGuardado = Cookies.get('user');
+    return valorGuardado ? valorGuardado : '';
+  });
   const [ventas, setVentas] = useState('');
   const [productos, setProductos] = useState('');
   const [categorias, setCategorias] = useState('');
@@ -43,33 +49,6 @@ function App() {
     setUser('');
     Cookies.remove('user');
   }
-
-  async function ingresar (name) {
-    console.log(name);
-    const response = await fetch('http://127.0.0.1:5000/login', {
-      method:'POST',
-      body: JSON.stringify(name),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    if (data.error !== undefined) {
-      alert("ERROR! " + data.error);
-    } else {
-      alert("Usuario encontrado!");
-      console.log(data['nombre'])
-      var usr = [data['modo'], data['nombre'], data['correo'], data['contrasenia']]
-      console.log(data['modo']);
-      guardarCookie(usr);
-      if(data['modo'] === 'Vendedor'){
-        navigate('/vendedor');
-      } else if(data['modo'] === 'Comprador'){
-        navigate('/comprador');
-      }
-    }
-  };
 
   async function recuperarVentas (user) {
     const response = await fetch('http://127.0.0.1:5000/recuperarVentas', {
@@ -237,7 +216,12 @@ function App() {
   }, [location.pathname]);
   
   return (
-    <div>
+    <>
+    {/* <AuthProvider><NavBar></NavBar></AuthProvider> */}
+    <AuthProvider>
+    <NavBar></NavBar>
+
+    <div>  
       <div>
         <ul className="circles">
           <li>Javier</li>
@@ -255,15 +239,16 @@ function App() {
         <div className="container">
           <header className="App-header" id="app-header">
             <span className="logo-log">
-              <a href="/">
+              <a onClick={() =>navigate('/')}>
                 <img src={logo} alt="MerkApp's logo" />
-            </a>
+
+              </a>
+              <h1>MerkApp</h1>
+              
               <Routes>
                 <Route path="/" element={Home()} />
-                <Route path='/register' element={<Registro /> } />
-                <Route path="/login" element={<LogInForm onSaveName={ingresar}/>} />
                 <Route path="/vendedor" element={<HomeVendedor name={user} eliminarCookie={eliminarCookie}/>} />
-                <Route path="/comprador" element={<HomeComprador name={user} eliminarCookie={eliminarCookie}/>} />
+                <Route path="/comprador" element={<HomeComprador name={user} eliminarCookie={eliminarCookie}></HomeComprador>} />
                 <Route path="/vendedor/crear" element={Crear(user, categorias)} />
                 <Route path="/vendedor/eliminar" element={Eliminar(user, ventas)} />
                 <Route path="/comprador/consultar" element={ConsultarProductos(productos)} />
@@ -281,6 +266,8 @@ function App() {
         </div>
       </div>
     </div>
+    </AuthProvider>
+    </>
   );
 }
 
