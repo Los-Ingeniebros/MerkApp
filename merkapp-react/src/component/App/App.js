@@ -123,9 +123,7 @@ function App() {
         //navigate('/');
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
       }
-    } else if (location.pathname === '/login') {
-      // Cookies.remove('user');
-    } else if (location.pathname === '/vendedor/eliminar') {
+    }else if (location.pathname === '/vendedor/eliminar') {
       almacenadoUser = Cookies.get('user');
       if (almacenadoUser) {
         almacenadoUser = almacenadoUser.split(",");
