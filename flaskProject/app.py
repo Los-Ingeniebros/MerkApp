@@ -147,23 +147,31 @@ def eliminarVentas():
         return res
     elif request.method == 'GET':
         return json.dumps({'hola': 'fin'})
-    elif request.method == 'POST':        
-        lista_de_id = request.json      
-        print(lista_de_id)  
-        for id in lista_de_id:
-            venta = Producto.query.filter(Producto.idProducto == id).first()
-            if(Comprar.query.filter(Comprar.idProducto == id).first()):
-                for registro in Comprar.query.filter(Comprar.idProducto == id).all():
-                    db.session.delete(registro)
-                    db.session.commit()
-            db.session.delete(venta)
-            db.session.commit()
-        id = 1        
-        for registro in Producto.query.all():
-            registro.idProducto = id                        
-            db.session.commit()
-            id += 1        
-        return json.dumps({'listo':'usuario'})
+    elif request.method == 'POST':
+        lista_de_id = request.json
+        try:
+            for id in lista_de_id:
+                venta = Producto.query.filter(Producto.idProducto == id).first()
+                if venta is not None:
+                    # Eliminar registros relacionados en la tabla Comprar
+                    registros_comprar = Comprar.query.filter(Comprar.idProducto == id).all()
+                    for registro in registros_comprar:
+                        db.session.delete(registro)
+                    db.session.delete(venta)
+            db.session.commit()  # Hacer commit al final de todas las operaciones
+        
+            # Reasignar IDs a los productos restantes
+            productos = Producto.query.all()
+            id = 1
+            for producto in productos:
+                producto.idProducto = id
+                id += 1
+            db.session.commit()  # Hacer commit al final de la reasignación de IDs
+        
+            return json.dumps({'listo': 'usuario'})
+        except Exception as e:
+            db.session.rollback()
+            return json.dumps({'error': str(e)})
 
 @app.route('/recuperarProductos', methods=['GET', 'POST', 'OPTIONS'])
 def recuperarProductos(): 
