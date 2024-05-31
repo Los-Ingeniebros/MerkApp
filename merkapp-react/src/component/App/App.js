@@ -213,6 +213,16 @@ function App() {
       }
       recuperarCategorias(almacenadoUser);     
       recuperarVentas(almacenadoUser);       
+    } else if (location.pathname.startsWith('/comprador/producto/')) {
+      almacenadoUser = Cookies.get('user');
+      if (almacenadoUser) {
+        almacenadoUser = almacenadoUser.split(",");
+        guardarCookie(almacenadoUser);
+        console.log('Nombre de usuario recuperado:', almacenadoUser);        
+      } else {
+        console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+        navigate('/');
+      }        
     } else if (location.pathname.startsWith('/comprador/calificacion/')) {
       almacenadoUser = Cookies.get('user');
       if (almacenadoUser) {
@@ -260,7 +270,7 @@ function App() {
                 <Route path="/vendedor/crear" element={Crear(user, categorias)} /> 
                 <Route path="/vendedor/eliminar" element={Eliminar(user, ventas)} />  
                 <Route path="/comprador/consultar" element={ConsultarProductos(productos)} />
-                <Route path="/comprador/producto/:key" element={<Producto />} />                
+                <Route path="/comprador/producto/:key" element={<Producto user={user}/>} />                
                 <Route path="/comprador/calificacion/:key" element={<AgregarOpinion user = {user}/>} />                                                 
                 <Route path="/vendedor/ventas" element={Listar (ventas) } />
                 <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />                                 

@@ -32,7 +32,10 @@ function AgregarOpinion (user) {
         });
         console.log(response);
         const data = await response.json();    
-        console.log(data);        
+        console.log(data);    
+        if (data[0] !== undefined && data[1] !== undefined){
+            alert("Opinión agregada exitosamente")    
+        }            
         navigate('/comprador');
         setOpinion('');
         setCalificacion('');

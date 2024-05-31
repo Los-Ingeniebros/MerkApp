@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 
-function Producto () {
+function Producto (user) {
     const { key } = useParams();
     const [producto, setProducto] = useState('');  
+    const [comprar, setComprar] = useState(false);
+    const [comentario, setComentario] = useState(false);
     const navigate = useNavigate();    
 
     async function recuperarProducto(){
@@ -19,10 +21,38 @@ function Producto () {
         setProducto(data['producto']);
     }
 
-    const submitHandler = async (event) => {
+    const comprarChangeHandler = (event) => {
+        setComprar(true);
+    };        
+
+    const submitHandler = async (event) => {        
         event.preventDefault();
-        navigate('/comprador/calificacion/'+key);
-        setProducto('');
+        console.log(comentario);
+        console.log(comprar);
+        if (comprar && comentario) {
+            navigate('/comprador/calificacion/'+key);   
+            setProducto('');
+        } else {
+            var usuario = Object.entries(user)
+            var lista = [key, usuario]
+            const response = await fetch('http://127.0.0.1:5000/comprarProducto', {
+                method:'POST',
+                body: JSON.stringify(lista),
+                headers: {
+                    'Content-Type':'application/json'
+                }
+            });
+            console.log(response);
+            const data = await response.json();    
+            console.log(data.error);
+            if (data.error !== undefined) {
+                alert("ERROR! " + data.error);            
+                navigate('/comprador')
+            } else {
+                alert("Compra efectuada con éxito\nPonte en contacto con el vendedor para acordar la entrega de tu pedido");                         
+                setComentario(true);
+            }                
+        }           
     };
 
     useEffect(() => {
@@ -45,9 +75,16 @@ function Producto () {
                                 <li key={index}>{comentario[0]} {comentario[1]} {comentario[2]}</li>
                                 ))}
                             </ul>
-                            <button type="submit">Añadir comentario</button>
+                            <div>
+                                <label> Vendido por: {value[5]} {value[6]} </label>
+                                <div> - Teléfono: {value[8]} </div>
+                                <div> - Correo electrónico: {value[7]} </div>
+                            </div>
+                            {comprar && <button type="submit">Añadir comentario</button>}                                             
                             <div/>
-                            <button>Comprar</button>                   
+                            <div>
+                            {!comprar && <button onClick={comprarChangeHandler}>Comprar</button>}                   
+                            </div>
                         </label>                         
                     </div>                
                 ))}            
