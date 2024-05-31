@@ -8,10 +8,8 @@ import logo from '../../imagenes/MerkAppSinFondo.png';
 function HomeVendedor(name){
     const navigate = useNavigate();
 
-    const submitHandler = (event) => {
-        Cookies.remove('user');
-        navigate('/login');
-        Cookies.remove('user');
+    const submitHandler = (event) => {        
+        navigate('/login/1');        
     }
 
     function crear () {

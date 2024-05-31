@@ -60,17 +60,11 @@ def login():
 def recuperarVentas(): 
     if request.method == 'OPTIONS':                   
         res = Response()        
-        print()
-        print(res)
-        print()
         res.headers['X-Content-Type-Options'] = '*'
         return res
-    elif request.method == 'POST':
-        print()
+    elif request.method == 'POST':   
         print(request.json)
-        if request.json == None:
-            print("ERROR")
-        print()
+        #exit(0)   
         correo = request.json[2]
         contrasenia = request.json[3]
         vendedor = Vendedor.query.filter(Vendedor.correo == correo, Vendedor.contrasenia == contrasenia).first()
@@ -147,7 +141,7 @@ def eliminarVentas():
         return res
     elif request.method == 'GET':
         return json.dumps({'hola': 'fin'})
-    elif request.method == 'POST':
+    elif request.method == 'POST':        
         lista_de_id = request.json
         for id in lista_de_id:
             venta = Producto.query.filter(Producto.idProducto == id).first()
