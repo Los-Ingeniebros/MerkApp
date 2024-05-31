@@ -142,19 +142,21 @@ def eliminarVentas():
     elif request.method == 'GET':
         return json.dumps({'hola': 'fin'})
     elif request.method == 'POST':        
-        lista_de_id = request.json
+        lista_de_id = request.json      
+        print(lista_de_id)  
         for id in lista_de_id:
             venta = Producto.query.filter(Producto.idProducto == id).first()
-            for registro in Comprar.query.filter(Comprar.idProducto == id).all():
-                db.session.delete(registro)
-                db.session.commit()
+            if(Comprar.query.filter(Comprar.idProducto == id).first()):
+                for registro in Comprar.query.filter(Comprar.idProducto == id).all():
+                    db.session.delete(registro)
+                    db.session.commit()
             db.session.delete(venta)
             db.session.commit()
-        id = 1
+        id = 1        
         for registro in Producto.query.all():
-            registro.idProducto = id
+            registro.idProducto = id                        
             db.session.commit()
-            id += 1
+            id += 1        
         return json.dumps({'listo':'usuario'})
 
 @app.route('/recuperarProductos', methods=['GET', 'POST', 'OPTIONS'])
