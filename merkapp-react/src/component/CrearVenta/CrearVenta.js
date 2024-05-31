@@ -53,6 +53,8 @@ function CrearVenta (user, categorias) {
         const data = await response.json();
         console.log(data);
         
+        alert("Producto modificado con éxito");
+        
         navigate('/vendedor');
         setNombre('');
         setDescripcion('');

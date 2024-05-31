@@ -104,6 +104,12 @@ def crearVenta():
         usuario = request.json[0]
         venta = request.json[1]
         
+        max_id = db.session.query(db.func.max(Producto.idProducto)).scalar()
+        if max_id is None:
+            max_id = 0
+        
+        nuevo_id = max_id + 1
+
         id = 1
         for registro in Producto.query.all():
             id += 1
@@ -112,7 +118,7 @@ def crearVenta():
         
         b : bytearray = 123 #TODO: Cambiar por la imagen a colocar.
 
-        producto = Producto(id, vendedor.idVendedor, venta[1], venta[0], venta[2], venta[3], venta[4], b)
+        producto = Producto(nuevo_id, vendedor.idVendedor, venta[1], venta[0], venta[2], venta[3], venta[4], b)
         db.session.add(producto)
         db.session.commit()
         
