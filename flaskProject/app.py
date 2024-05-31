@@ -261,6 +261,9 @@ def comprarProducto():
                     print(f"Correo enviado")
             except smtplib.SMTPException as e:
                 return json.dumps({'error': 'No se envió correo'})
+            if producto.stock == 0:
+                db.session.delete(producto)
+                db.session.commit()
             return json.dumps({'listo':'usuario'})
         else:
             return json.dumps({'error': 'Inventario vació'})           
