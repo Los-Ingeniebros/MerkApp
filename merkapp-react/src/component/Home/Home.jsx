@@ -8,7 +8,7 @@ const Home = () => {
   <div className="logo-log">Bienvenid@ a nuestro sistema</div>
   <br></br>
   <div className="logo-log">
-    <button className='boton-animado' onClick={() =>navigate('/login/0')}>Iniciar Sesion</button>
+    <button className='boton-animado' onClick={() =>navigate('/login')}>Iniciar Sesion</button>
     <br></br>
     <button className='boton-animado' onClick={() =>navigate('/register')}>Registrarse</button>
   </div>

@@ -23,6 +23,7 @@ import Modificar from '../ModificarVenta/ModificarVenta';
 import Listar from '../ModificarVenta/ListarVentas';
 import ConsultarProductos from '../ConsultarProductos/ConsultarProductos';
 import Producto from '../Producto/Producto';
+import { Navbar } from 'react-bootstrap';
 
 
 function App() {
@@ -118,10 +119,9 @@ function App() {
       } else {
         console.log(
           "No se encontró ningún nombre de usuario almacenado en los cookies."          
-        );
-        navigate('/login/0');
+        );        
       }      
-    } else if (location.pathname === '/login/0') {
+    } else if (location.pathname === '/login') {
       var almacenadoUser = Cookies.get("user");
       if (almacenadoUser) {        
         almacenadoUser = almacenadoUser.split(",");
@@ -137,9 +137,6 @@ function App() {
           "No se encontró ningún nombre de usuario almacenado en los cookies."
         );        
       }
-    } else if (location.pathname === '/login/1') {
-      eliminarCookie();
-      navigate('/login/0');
     } else if (location.pathname === '/vendedor') {
       var almacenadoUser = Cookies.get('user');
       if (almacenadoUser) {
@@ -151,7 +148,7 @@ function App() {
         }
       } else {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
-        navigate('/login/0');
+        navigate('/');
       }
     } else if (location.pathname === '/comprador') {
       var almacenadoUser = Cookies.get('user');
@@ -164,7 +161,7 @@ function App() {
         }
       } else {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
-        navigate('/login/0');
+        navigate('/');
       }
     } else if (location.pathname === '/vendedor/eliminar') {
       var almacenadoUser = Cookies.get('user'); 
@@ -175,7 +172,7 @@ function App() {
         console.log('Nombre de usuario recuperado:', almacenadoUser);          
       } else {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
-        navigate('/login/0');
+        navigate('/');
       } 
       recuperarVentas(almacenadoUser);
     } else if (location.pathname === '/comprador/consultar') {      
@@ -188,7 +185,7 @@ function App() {
         console.log('Nombre de usuario recuperado:', almacenadoUser);        
       } else {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
-        navigate('/login/0');
+        navigate('/');
       }
       recuperarCategorias(almacenadoUser);
     } else if (location.pathname.startsWith('/vendedor/modificar/')) {
@@ -200,7 +197,7 @@ function App() {
         console.log('Nombre de usuario recuperado:', almacenadoUser);        
       } else {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
-        navigate('/login/0');
+        navigate('/');
       }
       recuperarCategorias(almacenadoUser);
     } else if (location.pathname === '/vendedor/ventas') {
@@ -211,10 +208,20 @@ function App() {
         console.log('Nombre de usuario recuperado:', almacenadoUser);        
       } else {
         console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
-        navigate('/login/0');
+        navigate('/');
       }
       recuperarCategorias(almacenadoUser);     
       recuperarVentas(almacenadoUser);       
+    } else if (location.pathname.startsWith('/comprador/calificacion/')) {
+      almacenadoUser = Cookies.get('user');
+      if (almacenadoUser) {
+        almacenadoUser = almacenadoUser.split(",");
+        guardarCookie(almacenadoUser);
+        console.log('Nombre de usuario recuperado:', almacenadoUser);        
+      } else {
+        console.log('No se encontró ningún nombre de usuario almacenado en los cookies.');
+        navigate('/');
+      }        
     }
   }, [location.pathname]);
 
@@ -240,18 +247,16 @@ function App() {
         <div className="container">
           <div>
             <span className="logo-log">
-              <a href="/">
+            <a href="/">
                 {" "}
                 <img src={logo} alt="MerkApp's logo" />
-              </a>
-              <h1>MerkApp</h1>
+            </a>            
               <Routes>
                 <Route path="/" element={Home()} />
-                <Route path='/register' element={<Registro /> } />
-                <Route path="/login/0" element={<LogInForm onSaveName={ingresar}/>} />
-                <Route path="/login/1" element={<LogInForm onSaveName={ingresar}/>} />
-                <Route path="/vendedor" element={HomeVendedor(user)} />
-                <Route path="/comprador" element={HomeComprador(user)} />
+                <Route path='/register' element={<Registro /> } />              
+                <Route path="/login" element={<LogInForm onSaveName={ingresar}/>} />                
+                <Route path="/vendedor" element={<HomeVendedor name={user} eliminarCookie={eliminarCookie}/>} />                
+                <Route path="/comprador" element={<HomeComprador name={user} eliminarCookie={eliminarCookie}/>} />                
                 <Route path="/vendedor/crear" element={Crear(user, categorias)} /> 
                 <Route path="/vendedor/eliminar" element={Eliminar(user, ventas)} />  
                 <Route path="/comprador/consultar" element={ConsultarProductos(productos)} />
@@ -260,7 +265,7 @@ function App() {
                 <Route path="/vendedor/ventas" element={Listar (ventas) } />
                 <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />                                 
                 <Route path="/comprador/buscar" element={<EncontrarProducto />} />                                  
-              </Routes>          
+              </Routes>                     
           </span>
           </div>
         </div>
