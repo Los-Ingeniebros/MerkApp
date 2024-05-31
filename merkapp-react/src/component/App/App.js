@@ -23,7 +23,8 @@ import Modificar from '../ModificarVenta/ModificarVenta';
 import Listar from '../ModificarVenta/ListarVentas';
 import ConsultarProductos from '../ConsultarProductos/ConsultarProductos';
 import Producto from '../Producto/Producto';
-
+import NavBar from '../NavBar/NavBar';
+// import AuthProvider from '../Auth/Auth';
 
 function App() {
   const [user, setUser] = useState('');
@@ -166,7 +167,9 @@ function App() {
   //<Routes>
   
   return (
-    <div>
+    <>
+    <AuthProvider><NavBar></NavBar></AuthProvider>
+    <div>  
       <div>
         <ul className="circles">
           <li></li>
@@ -209,6 +212,7 @@ function App() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
