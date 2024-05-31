@@ -7,25 +7,16 @@ import Col from 'react-bootstrap/Col';
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import "./nav.css"
-// import { AuthContext, useAuth } from "../Auth/AuthContext";
+import { AuthContext, useAuth } from "../Auth/AuthContext";
 
 
 function NavBar() {
-    const [logedIn, setlogedin] = useState(false);
-    const [user, setUser] = useState('');
-    // const { user, logout } = useAuth(AuthContext);
-    // var user = "";
+    const [usr, setUsr] = useState('');
+    const { user, logout } = useAuth();
+    
     useEffect(() => {
-        var almacenadoUser = Cookies.get('user');
-        if(almacenadoUser){
-            setlogedin(true)
-            var almacenado = almacenadoUser.split(",");
-            setUser(almacenado[1])
-            console.log(almacenado)
-        }else{
-            setlogedin(false)
-        }
-    },[]);
+      
+    },[user]);
 
     return (
     <Navbar bg="secondary" expand="lg">
@@ -56,7 +47,7 @@ function NavBar() {
         </Row>
       </Form>
         <Navbar.Text className="margenD">
-            {logedIn ? <a>Hola {user} </a> : <a href="/login">Iniciar Sesion</a>}
+            {user ? <div>Hola {user[1]} <button onClick={logout}>Cerrar Sesión</button></div> : <a href="/login">Iniciar Sesion</a>}
             
         </Navbar.Text>
         </Navbar.Collapse>

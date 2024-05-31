@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import './HomeVendedor.css';
+import { AuthContext, useAuth } from "../Auth/AuthContext";
 
-import logo from '../../imagenes/MerkAppSinFondo.png';
-
-function HomeVendedor(name){
+function HomeVendedor(props){
     const navigate = useNavigate();
-
+    const {user, logout ,login } = useAuth();
+    
     const submitHandler = (event) => {
-        Cookies.remove('user');
-        navigate('/login');
-        // Cookies.remove('user');
+        logout();
     }
 
     function crear () {
@@ -36,7 +34,7 @@ function HomeVendedor(name){
                 <br></br>
                 <br></br>
                 <div>
-                    Hola {name[0]} {name[1]}
+                    Hola {props.name[0]} {props.name[1]}
                     <div className="logo-log">
                         <button className="boton-animado" onClick={() => crear()}>Crear venta</button>
                         <br></br>

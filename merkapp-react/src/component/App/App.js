@@ -24,10 +24,14 @@ import Listar from '../ModificarVenta/ListarVentas';
 import ConsultarProductos from '../ConsultarProductos/ConsultarProductos';
 import Producto from '../Producto/Producto';
 import NavBar from '../NavBar/NavBar';
+import AuthProvider from '../Auth/Auth';
 // import AuthProvider from '../Auth/Auth';
 
 function App() {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(() => {
+    const valorGuardado = Cookies.get('user');
+    return valorGuardado ? valorGuardado : '';
+  });
   const [ventas, setVentas] = useState('');
   const [productos, setProductos] = useState('');  
   const [categorias, setCategorias] = useState('');
@@ -167,7 +171,9 @@ function App() {
   return (
     <>
     {/* <AuthProvider><NavBar></NavBar></AuthProvider> */}
+    <AuthProvider>
     <NavBar></NavBar>
+
     <div>  
       <div>
         <ul className="circles">
@@ -186,14 +192,13 @@ function App() {
         <div className="container">
           <div>
             <span className="logo-log">
-              <a href="/">
+              <a onClick={() =>navigate('/')}>
                 <img src={logo} alt="MerkApp's logo" />
               </a>
               <h1>MerkApp</h1>
+              
               <Routes>
                 <Route path="/" element={Home()} />
-                <Route path="/vendedor" element={HomeVendedor(user)} />
-                <Route path="/comprador" element={HomeComprador(user)} />
                 <Route path="/vendedor/crear" element={Crear(user, categorias)} /> 
                 <Route path="/vendedor/eliminar" element={Eliminar(ventas)} />  
                 <Route path="/comprador/consultar" element={ConsultarProductos(productos)} />
@@ -203,14 +208,17 @@ function App() {
                 <Route path="/vendedor/modificar/:idProducto" element={<Modificar user={user} categorias={categorias} />} />                                 
                 <Route path="/comprador/buscar" element={<EncontrarProducto />} />
                 <Route path="/login" element={<RequireAuth><LogInForm/></RequireAuth>} />  
+                <Route path="/vendedor" element={<HomeVendedor name={user}></HomeVendedor>} />
+                <Route path="/comprador" element={<HomeComprador name={user}></HomeComprador>} />
                 <Route path='/ola' element={MiPaginaProtegida()} />
                 <Route path='/register' element={<RequireAuth> <Registro /> </RequireAuth>} />
-              </Routes>          
+              </Routes>     
           </span>
           </div>
         </div>
       </div>
     </div>
+    </AuthProvider>
     </>
   );
 }

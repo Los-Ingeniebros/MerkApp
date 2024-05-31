@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import './HomeComprador.css';
-
-import logo from '../../imagenes/MerkAppSinFondo.png';
+import { useAuth } from "../Auth/AuthContext";
 
 function HomeComprador(name){
     const navigate = useNavigate();
+    const {user, logout} = useAuth();
 
     const submitHandler = (event) => {
-        Cookies.remove('user');
-        navigate('/login');
-        Cookies.remove('user');
+        logout();
     }     
 
     function consultar () {
@@ -30,7 +28,7 @@ function HomeComprador(name){
                     <br></br>
                     <br></br>
                     <br></br>
-                    Hola {name[0]} {name[1]}
+                    Hola {user[0]} {user[1]}
                     <div>
                         <button className="boton-animado" onClick={() => consultar()}>Consultar productos</button>                        
                         <br></br>
