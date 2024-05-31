@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { Dropdown } from "react-bootstrap";
 
 import logo from '../../imagenes/MerkAppSinFondo.png';
 
@@ -13,6 +14,8 @@ function CrearVenta (user, categorias) {
     const [enteredStock, setStock] = useState('');
     // TODO: Implementar fotografia  -->  const [fotografia, setFotografia] = useState('');
     const [venta, setVenta] = useState('');
+    const [desplegado, setDesplegado] = useState(false);
+    const [opcionSeleccionada, setOpcionSeleccionada] = useState("");
 
     const nombreChangeHandler = (event) => {
         setNombre(event.target.value);
@@ -24,6 +27,16 @@ function CrearVenta (user, categorias) {
 
     const descripcionChangeHandler = (event) => {
         setDescripcion(event.target.value);
+    };
+
+    const manejarClic = (opcion) => {
+        var cat = "";
+        for (var i = 2; i < opcion.length; i++) {
+            cat = cat + opcion[i];
+        }
+        setOpcionSeleccionada(cat);
+        setDesplegado(!desplegado);
+        setCategoria(opcion[0]);
     };
 
     const precioChangeHandler = (event) => {
@@ -80,7 +93,8 @@ function CrearVenta (user, categorias) {
             </div>
             <div>
                 <label>Categoría:
-                    <p>
+
+                    {/* <p>
                         {categorias && Object.entries(categorias).map(([key, value]) => (
                             <label>
                                 <input
@@ -91,8 +105,23 @@ function CrearVenta (user, categorias) {
                                 {value}
                             </label>
                         ))}
-                    </p>
+                    </p> */}
                 </label>
+                <Dropdown onSelect={manejarClic} show={desplegado}>
+                <Dropdown.Toggle
+                  variant="success"
+                  id="dropdown-basic"
+                  onClick={() => setDesplegado(!desplegado)}
+                >
+                  {opcionSeleccionada || "Selecciona una opción"}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    {categorias && Object.entries(categorias).map(([key, value]) => (
+                        <Dropdown.Item eventKey={[key, value]}>{value}</Dropdown.Item>
+                    ))}
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
             <br></br>
             <div>
