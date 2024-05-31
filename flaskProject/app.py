@@ -15,7 +15,7 @@ import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dev'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ing:Developer123!@localhost:3306/base_merkaap'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://lab:Developer123!@localhost:3306/base_merkaap'
 db.init_app(app)
 CORS(app)
 
@@ -39,7 +39,7 @@ def login():
         return redirect(url_for('usuario.registrar_usuario'))
     if request.method == 'POST':
         correo = request.json['correo']
-        contrasenia = sha256((request.json['contrasenia']).encode('utf-8')).hexdigest()    
+        contrasenia = sha256((request.json['contrasenia']).encode('utf-8')).hexdigest()
         modo = request.json['modo']
         
         if modo == 'Vendedor':
@@ -58,13 +58,13 @@ def login():
     
 @app.route('/recuperarVentas', methods=['GET', 'POST', 'OPTIONS'])
 def recuperarVentas(): 
-    if request.method == 'OPTIONS':                   
-        res = Response()        
+    if request.method == 'OPTIONS':
+        res = Response()
         res.headers['X-Content-Type-Options'] = '*'
         return res
-    elif request.method == 'POST':   
+    elif request.method == 'POST':
         print(request.json)
-        #exit(0)   
+        #exit(0)
         correo = request.json[2]
         contrasenia = request.json[3]
         vendedor = Vendedor.query.filter(Vendedor.correo == correo, Vendedor.contrasenia == contrasenia).first()
@@ -147,9 +147,9 @@ def eliminarVentas():
         return res
     elif request.method == 'GET':
         return json.dumps({'hola': 'fin'})
-    elif request.method == 'POST':        
-        lista_de_id = request.json      
-        print(lista_de_id)  
+    elif request.method == 'POST':
+        lista_de_id = request.jso
+        print(lista_de_id)
         for id in lista_de_id:
             venta = Producto.query.filter(Producto.idProducto == id).first()
             if(Comprar.query.filter(Comprar.idProducto == id).first()):
@@ -158,42 +158,42 @@ def eliminarVentas():
                     db.session.commit()
             db.session.delete(venta)
             db.session.commit()
-        id = 1        
+        id = 1
         for registro in Producto.query.all():
-            registro.idProducto = id                        
+            registro.idProducto = id
             db.session.commit()
-            id += 1        
+            id += 1
         return json.dumps({'listo':'usuario'})
 
 @app.route('/recuperarProductos', methods=['GET', 'POST', 'OPTIONS'])
 def recuperarProductos(): 
-    if request.method == 'OPTIONS':                   
-        res = Response()        
+    if request.method == 'OPTIONS':
+        res = Response()
         res.headers['X-Content-Type-Options'] = '*'
         return res
     elif request.method == 'GET':
-        diccionario = {}        
+        diccionario = {}
         for registro in Producto.query.all():
             categoria = Categoria.query.filter(Categoria.idCategoria == registro.idCategoria).first()
             producto = {registro.idProducto:[registro.nombre, categoria.nombre, registro.precio , registro.stock]}
-            diccionario.update(producto)    
+            diccionario.update(producto)
         return json.dumps({'dic': diccionario})
 
 @app.route('/recuperarProducto', methods=['GET', 'POST', 'OPTIONS'])
-def recuperarProducto(): 
-    if request.method == 'OPTIONS':                   
-        res = Response()        
+def recuperarProducto():
+    if request.method == 'OPTIONS':
+        res = Response()
         res.headers['X-Content-Type-Options'] = '*'
         return res
     elif request.method == 'POST':
         id = request.json
-        producto = Producto.query.filter(Producto.idProducto == id).first()                
+        producto = Producto.query.filter(Producto.idProducto == id).first()
         categoria = Categoria.query.filter(Categoria.idCategoria == producto.idCategoria).first()
-        vendedor = Vendedor.query.filter(Vendedor.idVendedor == producto.idVendedor).first()        
-        comentarios = []        
+        vendedor = Vendedor.query.filter(Vendedor.idVendedor == producto.idVendedor).first()
+        comentarios = []
         for comentario in Comprar.query.filter(Comprar.idProducto == producto.idProducto).all():
             comprador = Comprador.query.filter(Comprador.idComprador == comentario.idComprador).first()
-            comentarios.append([comentario.calificacion, comprador.nombre, comentario.comentario])                    
+            comentarios.append([comentario.calificacion, comprador.nombre, comentario.comentario])
         producto = {producto.idProducto:[producto.nombre, categoria.nombre, producto.precio , producto.stock, comentarios, vendedor.nombre, vendedor.apellidoPat, vendedor.correo, vendedor.telefono]}
         return json.dumps({'producto': producto})
 
@@ -202,7 +202,7 @@ def agregarOpinion():
     if request.method == 'OPTIONS':
         res = Response()
         return res
-    elif request.method == 'POST':        
+    elif request.method == 'POST':
         usuario = request.json[0]['user']
         opinion = request.json[1]
         idProducto = request.json[2]
@@ -224,27 +224,27 @@ def agregarOpinion():
         elif opinion[0] != '' and opinion[1] == '':
             compra = Comprar(id, comprador.idComprador, int(idProducto), opinion[1], opinion[0])
             db.session.add(compra)
-            db.session.commit()      
+            db.session.commit()
         return json.dumps({'Op':[opinion[0],opinion]})
     
 @app.route('/comprarProducto', methods=['GET', 'POST', 'OPTIONS'])
 def comprarProducto():
     if request.method == 'OPTIONS':
-        res = Response()        
+        res = Response()
         return res
-    elif request.method == 'POST':                 
+    elif request.method == 'POST':
         id = request.json[0]
-        usuario = request.json[1]        
-        correo = usuario[0][1][2]                 
+        usuario = request.json[1]
+        correo = usuario[0][1][2]
         producto = Producto.query.filter(Producto.idProducto == id).first()
         vendedor = Vendedor.query.filter(Vendedor.idVendedor == producto.idVendedor).first()
-        producto.stock = producto.stock-1                
+        producto.stock = producto.stock - 1
         if producto.stock >= 0:
-            db.session.commit()  
+            db.session.commit()
             # Información del correo
             correo_merkapp = "merkapp.online@gmail.com"
             # Debería ser una contraseña de aplicación o una contraseña segura
-            contra_merkapp = "edlu ylzl vbrw ugzf"  
+            contra_merkapp = "edlu ylzl vbrw ugzf"
 
             msg = EmailMessage()
             msg["Subject"] = "¡Compra exitosa!"
@@ -266,7 +266,7 @@ def comprarProducto():
                 db.session.commit()
             return json.dumps({'listo':'usuario'})
         else:
-            return json.dumps({'error': 'Inventario vació'})           
+            return json.dumps({'error': 'Inventario vació'})
 
 @app.route('/buscar', methods=['GET'])
 def buscar_productos():
@@ -308,7 +308,7 @@ def logout():
 
 @app.route('/register',  methods=['GET', 'POST'])
 def register():
-    if request.method == 'GET':        
+    if request.method == 'GET':
         return render_template('index.html')
     if request.method == 'POST':
         
@@ -353,13 +353,11 @@ def register():
                 smtp.send_message(msg)
                 print(f"Correo enviado")
         except smtplib.SMTPException as e:
-            print(f"Error al enviar el correo a {correo}: {e}")                    
+            print(f"Error al enviar el correo a {correo}: {e}")
 
         db.session.add(nuevo_usuario)
         db.session.commit()
         return json.dumps({'listo':nombre, 'correo':correo})
-
-
 
 if __name__ == '__main__':
     app.run()
